@@ -1,4 +1,4 @@
-package com.lamardinho.uefanotifier.controllers;
+package com.lamardinho.sportnotifier.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
