@@ -1,4 +1,4 @@
-package com.lamardinho.sportnotifier.config;
+package com.lamardinho.sportnotifier.common;
 
 import lombok.val;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
