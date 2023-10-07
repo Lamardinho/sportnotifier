@@ -2,10 +2,10 @@ server:
   port: ${PORT:8090}
 spring:
   #datasource:
-    #driver-class-name: org.postgresql.Driver
-    #username: ${DB_USER:postgres}
-    #password: ${DB_PASSWORD:}
-    #url: jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5432}/${DATABASE_NAME:just_project}?currentSchema=public
+  #driver-class-name: org.postgresql.Driver
+  #username: ${DB_USER:postgres}
+  #password: ${DB_PASSWORD:}
+  #url: jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5432}/${DATABASE_NAME:just_project}?currentSchema=public
   liquibase:
     enabled: off
     change-log: db/changelog/db-master.xml
@@ -27,12 +27,12 @@ spring:
           ssl:
             enable: true
     test-connection: false
-  #cache:
+    #cache:
     #type: simple
 
-#springdoc:
-  #packagesToScan: com.example.just_project
-  #swagger-ui:
+    #springdoc:
+    #packagesToScan: com.example.just_project
+    #swagger-ui:
     #disable-swagger-default-url: true
 
 app:
@@ -44,3 +44,5 @@ app:
       send-msg-post-url: ${TELEGRAM_SEND-MSG-POST-URL:https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s}
   rapid-api:
     key: ${RAPIDAPI_KEY:secret}
+  football-data-org:
+    token: ${FOOTBALL_DATA_ORG_TOKEN:secret}

@@ -1,12 +1,15 @@
 package com.lamardinho.sportnotifier.footballdataorg.api;
 
+import com.lamardinho.sportnotifier.footballdataorg.dto.FootballApiDTO;
 import com.lamardinho.sportnotifier.footballdataorg.service.FootballDataOrgService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import lombok.val;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -19,9 +22,12 @@ public class FootballDataOrgController {
     private final FootballDataOrgService footballDataOrgService;
 
     @GetMapping("matches")
-    public ResponseEntity<String> getChampionsLeagueMatches() {
-        footballDataOrgService.test();
-        return ResponseEntity.ok("Hello user");
+    public ResponseEntity<FootballApiDTO> getChampionsLeagueMatches(
+            @RequestParam("dateFrom") String dateFrom,
+            @RequestParam("dateTo") String dateTo
+    ) {
+        val result =
+                footballDataOrgService.getChampionsLeagueMatches(dateFrom, dateTo);
+        return ResponseEntity.ok(result);
     }
 }
-//https://api.football-data.org/v4/competitions/CL/matches?dateFrom=2023-10-03&dateTo=2023-10-03
