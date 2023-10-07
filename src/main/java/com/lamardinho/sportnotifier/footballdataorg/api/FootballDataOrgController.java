@@ -21,7 +21,7 @@ public class FootballDataOrgController {
     @NonNull
     private final FootballDataOrgService footballDataOrgService;
 
-    @GetMapping("matches")
+    @GetMapping("/matches")
     public ResponseEntity<FootballApiDTO> getChampionsLeagueMatches(
             @RequestParam("dateFrom") String dateFrom,
             @RequestParam("dateTo") String dateTo
@@ -29,5 +29,11 @@ public class FootballDataOrgController {
         val result =
                 footballDataOrgService.getChampionsLeagueMatches(dateFrom, dateTo);
         return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<Boolean> test( @RequestParam("chatId") String chatId) {
+        footballDataOrgService.test(chatId);
+        return ResponseEntity.ok(true);
     }
 }

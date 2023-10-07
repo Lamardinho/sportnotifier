@@ -1,0 +1,54 @@
+package com.lamardinho.sportnotifier.footballdataorg.service;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lamardinho.sportnotifier.footballdataorg.dto.MatchDTO;
+import com.lamardinho.sportnotifier.footballdataorg.dto.TeamDTO;
+import com.lamardinho.sportnotifier.messages.service.impl.TelegramMessageServiceImpl;
+import org.junit.jupiter.api.Test;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+class FootballDataOrgServiceTest {
+
+    private final FootballDataOrgService footballDataOrgService =
+            new FootballDataOrgService(
+                    new ObjectMapper(),
+                    new RestTemplate(),
+                    new TelegramMessageServiceImpl(new RestTemplate())
+            );
+
+    @Test
+    void createMatchesString() {
+        final var m1 = new MatchDTO()
+                .setUtcDate("2023-10-03T16:45:00Z")
+                .setHomeTeam(new TeamDTO().setName("Real Madrid"))
+                .setAwayTeam(new TeamDTO().setName("Manchester United"));
+        final var m2 = new MatchDTO()
+                .setUtcDate("2023-10-03T18:45:00Z")
+                .setHomeTeam(new TeamDTO().setName("Barcelona"))
+                .setAwayTeam(new TeamDTO().setName("Chelsea"));
+        final var m3 = new MatchDTO()
+                .setUtcDate("2023-10-03T19:45:00Z")
+                .setHomeTeam(new TeamDTO().setName("PSG"))
+                .setAwayTeam(new TeamDTO().setName("Manchester City"));
+        final var matches = List.of(m1, m2, m3);
+
+        // act:
+        final var result = footballDataOrgService.createMatchesString(matches);
+
+        System.out.println("\n" + result);
+        assertThat(result).isEqualTo(
+                "Расписание матчей лиги чемпионов на сегодня:\n" +
+                        "\n" +
+                        "Real Madrid vs Manchester United (время: 2023-10-03T16:45:00Z)\n" +
+                        "\n" +
+                        "Barcelona vs Chelsea (время: 2023-10-03T18:45:00Z)\n" +
+                        "\n" +
+                        "PSG vs Manchester City (время: 2023-10-03T19:45:00Z)\n" +
+                        "\n"
+        );
+    }
+}
