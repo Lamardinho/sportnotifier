@@ -11,6 +11,7 @@ spring:
     change-log: db/changelog/db-master.xml
   jpa:
     generate-ddl: false
+    open-in-view: false
   mail:
     #default-encoding: UTF-8
     host: smtp.yandex.ru
