@@ -3,18 +3,3 @@ EXPOSE 8090
 WORKDIR /opt/app
 COPY build/libs/*.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
-
-# КОМАНДЫ:
-
-#билдим проект:
-#./gradlew clean build
-
-#собираем образ:
-#docker build -t sportnotifier:latest .
-
-#запускаем контейнер:
-#docker run -it --name sportnotifier_v1 -p 8090:8090 --env-file Dockerfile_envs.env -d sportnotifier
-
-
-# для запуска всех команд перечисленных выше за 1 раз:
-#./gradlew clean build && docker build -t sportnotifier:latest . && docker run -it --name sportnotifier_v1 -p 8090:8090 --env-file Dockerfile_envs.env -d sportnotifier

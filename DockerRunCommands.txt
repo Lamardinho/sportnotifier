@@ -1,0 +1,16 @@
+# КОМАНДЫ:
+
+#билдим проект:
+./gradlew clean build
+
+#собираем образ:
+docker build -t slezkin23/sportnotifier:latest .
+
+#запускаем контейнер:
+docker run -it --name sportnotifier -p 8090:8090 --env-file Dockerfile_envs.env -d slezkin23/sportnotifier
+
+
+# для запуска всех команд перечисленных выше за 1 раз:
+./gradlew clean build && docker build -t slezkin23/sportnotifier:latest . && docker run -it --name sportnotifier -p 8090:8090 --env-file Dockerfile_envs.env -d slezkin23/sportnotifier
+
+docker push slezkin23/sportnotifier:latest
