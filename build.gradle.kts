@@ -1,3 +1,6 @@
+var springBootVersion: String = "2.7.0"
+var lombokVersion: String = "1.18.30"
+
 plugins {
     java
     id("org.springframework.boot") version "2.7.0"
@@ -22,19 +25,23 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion")
+    implementation("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
+    implementation("org.springframework.boot:spring-boot-starter-security:$springBootVersion")
     // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
     implementation("org.springdoc:springdoc-openapi-ui:1.7.0")
-    implementation("org.liquibase:liquibase-core")
-    runtimeOnly("com.h2database:h2")
-    implementation("org.projectlombok:lombok:1.18.30")
-    annotationProcessor("org.projectlombok:lombok:1.18.30")
 
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testAnnotationProcessor("org.projectlombok:lombok:1.18.30")
+    implementation("org.liquibase:liquibase-core:4.24.0")
+    runtimeOnly("com.h2database:h2:2.2.224")
+
+    implementation("org.projectlombok:lombok:$lombokVersion")
+    annotationProcessor("org.projectlombok:lombok:$lombokVersion")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
+    testAnnotationProcessor("org.projectlombok:lombok:$lombokVersion")
 }
 
 tasks.withType<Test> {
+    maxParallelForks = 4
     useJUnitPlatform()
 }
