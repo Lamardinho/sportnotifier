@@ -17,6 +17,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDate;
 import java.util.Collection;
 
 import static java.lang.String.format;
@@ -36,32 +37,26 @@ public class FootballDataOrgService {
     @Value("${app.football-data-org.token}")
     private String token;
 
-    public void test(@NonNull String chatID) {
-        val dto = getChampionsLeagueMatches("2023-10-03", "2023-10-03");
+    public boolean getChampionsLeagueMatchesByDatesAndSendToTelegram(
+            @NonNull String chatID,
+            @NonNull LocalDate dateFrom,
+            @NonNull LocalDate dateTo
+    ) {
+        val dto = getChampionsLeagueMatches(dateFrom, dateTo);
         val matches = dto.getMatches();
-        val msg = createMatchesString(matches);
-        log.info(msg);
-        telegramMessageService.sendMessage(new TelegramSendMessageDTO(chatID, msg));
-    }
-
-    @NonNull
-    public String createMatchesString(@NonNull Collection<MatchDTO> matches) {
-        val sb = new StringBuilder();
-        sb.append("Расписание матчей лиги чемпионов на сегодня:\n\n");
-        for (val match : matches) {
-            sb
-                    .append(match.getHomeTeam().getName()).append(" vs ").append(match.getAwayTeam().getName())
-                    .append(" (время: ").append(match.getUtcDate()).append(")")
-                    .append("\n\n");
+        if (matches.isEmpty()) {
+            log.info(format("В указанном диапазоне нет матчей (%s - %s)", dateFrom, dateTo));
+            return false;
         }
-
-        return sb.toString();
+        val msg = createMatchesString(matches);
+        telegramMessageService.sendMessage(new TelegramSendMessageDTO(chatID, msg));
+        return true;
     }
 
     @SneakyThrows
     public FootballApiDTO getChampionsLeagueMatches(
-            @NonNull String dateFrom,
-            @NonNull String dateTo
+            @NonNull LocalDate dateFrom,
+            @NonNull LocalDate dateTo
     ) {
         val url = format(
                 "https://api.football-data.org/v4/competitions/CL/matches?dateFrom=%s&dateTo=%s",
@@ -81,8 +76,20 @@ public class FootballDataOrgService {
         );
 
         val body = response.getBody();
-        val result = objectMapper.readValue(body, FootballApiDTO.class);
-        log.info("ok");
-        return result;
+        return objectMapper.readValue(body, FootballApiDTO.class);
+    }
+
+    @NonNull
+    protected String createMatchesString(@NonNull Collection<MatchDTO> matches) {
+        val sb = new StringBuilder();
+        sb.append("Расписание матчей лиги чемпионов:\n\n");
+        for (val match : matches) {
+            sb
+                    .append(match.getHomeTeam().getName()).append(" vs ").append(match.getAwayTeam().getName())
+                    .append(" (время: ").append(match.getUtcDate()).append(")")
+                    .append("\n\n");
+        }
+
+        return sb.toString();
     }
 }

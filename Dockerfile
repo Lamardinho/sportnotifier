@@ -13,7 +13,8 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 #docker build -t sportnotifier:latest .
 
 #запускаем контейнер:
-#docker run -it --name sportnotifier_v1 -p 8090:8090 -d sportnotifier
+#docker run -it --name sportnotifier_v1 -p 8090:8090 --env-file Dockerfile_envs.env -d sportnotifier
 
-# проверяем:
-#http://localhost:8090/hello
+
+# для запуска всех команд перечисленных выше за 1 раз:
+#./gradlew clean build && docker build -t sportnotifier:latest . && docker run -it --name sportnotifier_v1 -p 8090:8090 --env-file Dockerfile_envs.env -d sportnotifier

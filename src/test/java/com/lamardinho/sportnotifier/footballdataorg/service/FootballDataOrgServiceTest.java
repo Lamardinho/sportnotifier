@@ -41,7 +41,7 @@ class FootballDataOrgServiceTest {
 
         System.out.println("\n" + result);
         assertThat(result).isEqualTo(
-                "Расписание матчей лиги чемпионов на сегодня:\n" +
+                "Расписание матчей лиги чемпионов:\n" +
                         "\n" +
                         "Real Madrid vs Manchester United (время: 2023-10-03T16:45:00Z)\n" +
                         "\n" +
