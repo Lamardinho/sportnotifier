@@ -2,6 +2,7 @@ package com.lamardinho.sportnotifier.footballdataorg.api;
 
 import com.lamardinho.sportnotifier.footballdataorg.dto.FootballApiDTO;
 import com.lamardinho.sportnotifier.footballdataorg.service.FootballDataOrgService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -16,15 +17,19 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping("/football-data-org")
+@RequestMapping("/football-data-org/match")
 @RequiredArgsConstructor
 @Log4j2
-public class FootballDataOrgController {
+public class FootballDataOrgMatchesController {
 
     @NonNull
     private final FootballDataOrgService footballDataOrgService;
 
-    @GetMapping("/matches")
+    @GetMapping("/schedule/champions-league/by-period/look")
+    @Operation(
+            summary = "просмотр расписания",
+            description = "позволяет посмотреть матчи лиги чемпионов за конкретный период"
+    )
     public ResponseEntity<FootballApiDTO> getChampionsLeagueMatches(
             @RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
             @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo
@@ -34,11 +39,15 @@ public class FootballDataOrgController {
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping("/test")
+    @GetMapping("/schedule/champions-league/by-period/send")
+    @Operation(
+            summary = "для тестов: отправка расписания",
+            description = "для тестов: отправляет конкретному пользователю сообщение о матчах лиги чемпионов за указанный период времени"
+    )
     public ResponseEntity<Boolean> getChampionsLeagueMatchesByDatesAndSendToTelegram(
             @RequestParam("chatId") String chatId,
-            @RequestParam("dateFrom") LocalDate dateFrom,
-            @RequestParam("dateTo") LocalDate dateTo
+            @RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
+            @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo
     ) {
         footballDataOrgService.getChampionsLeagueMatchesByDatesAndSendToTelegram(chatId, dateFrom, dateTo);
         return ResponseEntity.ok(true);
