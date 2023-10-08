@@ -46,7 +46,5 @@ app:
       chat:
         id:
           lamardinho: ${LAMARDINHO:367222121}
-  rapid-api:
-    key: ${RAPIDAPI_KEY:secret}
   football-data-org:
     token: ${FOOTBALL_DATA_ORG_TOKEN:secret}
