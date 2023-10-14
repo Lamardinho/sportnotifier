@@ -5,9 +5,9 @@
 
 #собираем образ:
 # локально:
-docker build -t slezkin23/sportnotifier:latest .
+docker build -t slezkin23/sportnotifier:amd64 .
 # для удаленного сервера:
-docker build -t slezkin23/sportnotifier:latest --build-arg SPRING_PROFILES_ACTIVE=vdsina .
+docker build -t slezkin23/sportnotifier:amd64 --build-arg SPRING_PROFILES_ACTIVE=vdsina .
 
 #запускаем контейнер:
 # локально:
@@ -15,34 +15,71 @@ docker run -it --name sportnotifier -p 8090:8090 --env-file Dockerfile_envs.env 
 # для удаленного сервера:
 docker run -it --name sportnotifier -p 8090:8090 --env-file Dockerfile_envs.env -e SPRING_PROFILES_ACTIVE=vdsina -d slezkin23/sportnotifier
 
+#######################################################################################################################
 
 # RUN - ALL: всех команд перечисленных выше за 1 раз:
 # локально: сборка образа и запуск контейнера:
-./gradlew clean build && docker build -t slezkin23/sportnotifier:latest . && docker run -it --name sportnotifier -p 8090:8090 --env-file Dockerfile_envs.env -d slezkin23/sportnotifier
+./gradlew clean build && docker build -t slezkin23/sportnotifier:amd64 . && docker run -it --name sportnotifier -p 8090:8090 --env-file Dockerfile_envs.env -d slezkin23/sportnotifier
 # для удаленного сервера:
-./gradlew clean build && docker build -t slezkin23/sportnotifier:latest --build-arg SPRING_PROFILES_ACTIVE=vdsina . && docker push slezkin23/sportnotifier:latest
+./gradlew clean build && docker build -t slezkin23/sportnotifier:amd64 --build-arg SPRING_PROFILES_ACTIVE=vdsina . && docker push slezkin23/sportnotifier:amd64
 
 # запушить образ в hub !!! ток сначала обнови переменные в application.yml
-docker push slezkin23/sportnotifier:latest
+docker push slezkin23/sportnotifier:amd64
 
 # скачать
 # локально:
-docker pull slezkin23/sportnotifier:latest && docker run -it --name sportnotifier -p 8090:8090 -d slezkin23/sportnotifier && docker logs -f sportnotifier
+docker pull slezkin23/sportnotifier:amd64 && docker run -it --name sportnotifier -p 8090:8090 -d slezkin23/sportnotifier && docker logs -f sportnotifier
 # на удаленном сервере:
-docker pull slezkin23/sportnotifier:latest && docker run -it --name sportnotifier -p 8090:8090 -e SPRING_PROFILES_ACTIVE=vdsina -d slezkin23/sportnotifier && docker logs -f sportnotifier
+docker pull slezkin23/sportnotifier:amd64 && docker run -it --name sportnotifier -p 8090:8090 -e SPRING_PROFILES_ACTIVE=vdsina -d slezkin23/sportnotifier && docker logs -f sportnotifier
 
 # на удаленном сервере
 # для полного удаления контейнера и образа:
 docker stop sportnotifier && docker rm sportnotifier && docker rmi Image slezkin23/sportnotifier
 # или полная переустановка на удаленном сервере:
-docker stop sportnotifier && docker rm sportnotifier && docker rmi Image slezkin23/sportnotifier && docker pull slezkin23/sportnotifier:latest && docker run -it --name sportnotifier -p 8090:8090 -e SPRING_PROFILES_ACTIVE=vdsina -d slezkin23/sportnotifier && docker logs -f sportnotifier
+docker stop sportnotifier && docker rm sportnotifier && docker rmi Image slezkin23/sportnotifier && docker pull slezkin23/sportnotifier:amd64 && docker run -it --name sportnotifier -p 8090:8090 -e SPRING_PROFILES_ACTIVE=vdsina -d slezkin23/sportnotifier && docker logs -f sportnotifier
 
+#######################################################################################################################
 
 # копипаста от команд выше -> для сборки и развертывания после изменений:
-# : собираем и пушим:
-./gradlew clean build && docker build -t slezkin23/sportnotifier:latest --build-arg SPRING_PROFILES_ACTIVE=vdsina . && docker push slezkin23/sportnotifier:latest
-# на серваке переустанавливаем:
-1)
-docker stop sportnotifier && docker rm sportnotifier && docker rmi Image slezkin23/sportnotifier
-2)
-docker pull slezkin23/sportnotifier:latest && docker run -it --name sportnotifier -p 8090:8090 -e SPRING_PROFILES_ACTIVE=vdsina -d slezkin23/sportnotifier && docker logs -f sportnotifier
+
+# : СОБИРАЕМ И ПУШИМ:
+# стандарт (AMD):
+./gradlew clean build &&
+docker build -t slezkin23/sportnotifier:amd64 --build-arg SPRING_PROFILES_ACTIVE=vdsina . &&
+docker push slezkin23/sportnotifier:amd64
+    or (ARM):
+# для linux/arm64
+./gradlew clean build &&
+docker buildx build --platform linux/arm64  -t slezkin23/sportnotifier:arm64 --build-arg SPRING_PROFILES_ACTIVE=vdsina . &&
+docker push slezkin23/sportnotifier:arm64
+# для всех сразу:
+./gradlew clean build &&
+docker build -t slezkin23/sportnotifier:amd64 --build-arg SPRING_PROFILES_ACTIVE=vdsina . &&
+docker push slezkin23/sportnotifier:amd64 &&
+echo &&
+./gradlew clean build &&
+docker buildx build --platform linux/arm64  -t slezkin23/sportnotifier:arm64 --build-arg SPRING_PROFILES_ACTIVE=vdsina . &&
+docker push slezkin23/sportnotifier:arm64
+
+
+# НА СЕРВАКЕ ПЕРЕУСТАНАВЛИВАЕМ:
+# for AMD
+echo && echo STOP: && docker stop sportnotifier &&
+echo && echo REMOVE_CONTAINER: && docker rm sportnotifier &&
+echo && echo REMOVE_IMAGE: && docker rmi slezkin23/sportnotifier:amd64 &&
+echo && echo PULL: && docker pull slezkin23/sportnotifier:amd64 &&
+echo && echo RUN: && docker run -it --name sportnotifier -p 8090:8090 -e SPRING_PROFILES_ACTIVE=vdsina -d --restart always slezkin23/sportnotifier:amd64 &&
+echo && echo LOGS: && docker logs -f sportnotifier
+
+# or for ARM
+echo && echo STOP: && sudo docker stop sportnotifier &&
+echo && echo REMOVE_CONTAINER: sudo docker rm sportnotifier &&
+echo && echo REMOVE_IMAGE: && sudo docker rmi slezkin23/sportnotifier:arm64 &&
+echo && echo PULL: && sudo docker pull slezkin23/sportnotifier:arm64 &&
+echo && echo RUN: && sudo docker run -it --name sportnotifier -p 8090:8090 -e SPRING_PROFILES_ACTIVE=vdsina -d --restart always slezkin23/sportnotifier:arm64 &&
+echo && echo LOGS: && sudo docker logs -f sportnotifier
+
+
+or
+echo && echo IMAGES: && sudo docker images &&
+echo && echo CONTAINERS: && sudo docker ps -a
