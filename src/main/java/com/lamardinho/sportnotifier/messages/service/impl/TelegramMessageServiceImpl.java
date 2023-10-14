@@ -20,12 +20,12 @@ public class TelegramMessageServiceImpl implements TelegramMessageService {
 
     @Value("${app.telegram.bot.token}")
     private String botToken;
-    @Value("${app.telegram.bot.send-msg-post-url}")
-    private String sendMsgPostUrl;
+    @Value("${app.telegram.bot.send-msg-post-url-template}")
+    private String sendMsgPostUrlTemplate;
 
     @Override
     public void sendMessage(@NonNull TelegramSendMessageDTO dto) {
-        val url = String.format(sendMsgPostUrl, botToken, dto.getAddress(), dto.getText());
+        val url = String.format(sendMsgPostUrlTemplate, botToken, dto.getAddress(), dto.getText());
         restTemplate.postForEntity(url, null, String.class);
     }
 }

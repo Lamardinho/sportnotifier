@@ -4,15 +4,29 @@
 ./gradlew clean build
 
 #собираем образ:
+# локально:
 docker build -t slezkin23/sportnotifier:latest .
+# для удаленного сервера:
+docker build -t slezkin23/sportnotifier:latest --build-arg SPRING_PROFILES_ACTIVE=vdsina .
 
 #запускаем контейнер:
+# локально:
 docker run -it --name sportnotifier -p 8090:8090 --env-file Dockerfile_envs.env -d slezkin23/sportnotifier
+# для удаленного сервера:
+docker run -it --name sportnotifier -p 8090:8090 --env-file Dockerfile_envs.env -e SPRING_PROFILES_ACTIVE=vdsina -d slezkin23/sportnotifier
+
 
 # RUN - ALL: всех команд перечисленных выше за 1 раз:
+# локально: сборка образа и запуск контейнера:
 ./gradlew clean build && docker build -t slezkin23/sportnotifier:latest . && docker run -it --name sportnotifier -p 8090:8090 --env-file Dockerfile_envs.env -d slezkin23/sportnotifier
+# для удаленного сервера:
+./gradlew clean build && docker build -t slezkin23/sportnotifier:latest --build-arg SPRING_PROFILES_ACTIVE=vdsina . && docker push slezkin23/sportnotifier:latest
 
 # запушить образ в hub !!! ток сначала обнови переменные в application.yml
 docker push slezkin23/sportnotifier:latest
+
 # скачать
+# локально:
 docker pull slezkin23/sportnotifier:latest && docker run -it --name sportnotifier -p 8090:8090 -d slezkin23/sportnotifier && docker logs -f sportnotifier
+# на удаленном сервере:
+docker pull slezkin23/sportnotifier:latest && docker run -it --name sportnotifier -p 8090:8090 -e SPRING_PROFILES_ACTIVE=vdsina -d slezkin23/sportnotifier && docker logs -f sportnotifier

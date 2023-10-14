@@ -8,7 +8,6 @@ import lombok.val;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.concurrent.TimeUnit;
@@ -21,13 +20,12 @@ public class FootballDataOrgScheduler {
     @NonNull
     private final FootballDataOrgService footballDataOrgService;
 
-    @Value("${app.telegram.bot.chat.id.lamardinho}")
+    @Value("${app.telegram.chat-id.owner}")
     private String chatID;
 
     private boolean sent;
 
-    @Scheduled(fixedRate = 1, initialDelay = 0, timeUnit = TimeUnit.HOURS)
-    @Transactional
+    @Scheduled(fixedRate = 12, initialDelay = 0, timeUnit = TimeUnit.HOURS)
     public void updateToday() {
         if (sent) {
             return;
@@ -39,7 +37,6 @@ public class FootballDataOrgScheduler {
     }
 
     @Scheduled(cron = "0 0 10 * * ?")
-    @Transactional
     public void sent() {
         sent = false;
         log.info("Good morning");

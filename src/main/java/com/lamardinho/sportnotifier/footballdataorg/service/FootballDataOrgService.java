@@ -48,7 +48,7 @@ public class FootballDataOrgService {
             log.info(format("В указанном диапазоне нет матчей (%s - %s)", dateFrom, dateTo));
             return false;
         }
-        val msg = createMatchesString(matches);
+        val msg = createMatchesString(matches, dateFrom, dateTo);
         telegramMessageService.sendMessage(new TelegramSendMessageDTO(chatID, msg));
         return true;
     }
@@ -80,9 +80,14 @@ public class FootballDataOrgService {
     }
 
     @NonNull
-    protected String createMatchesString(@NonNull Collection<MatchDTO> matches) {
+    protected String createMatchesString(
+            @NonNull Collection<MatchDTO> matches,
+            @NonNull LocalDate dateFrom,
+            @NonNull LocalDate dateTo
+    ) {
         val sb = new StringBuilder();
-        sb.append("Расписание матчей лиги чемпионов:\n\n");
+        val header = format("Расписание матчей лиги чемпионов за период (%s - %s):", dateFrom, dateTo);
+        sb.append(header).append("\n\n");
         for (val match : matches) {
             sb
                     .append(match.getHomeTeam().getName()).append(" vs ").append(match.getAwayTeam().getName())

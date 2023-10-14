@@ -31,8 +31,10 @@ public class FootballDataOrgMatchesController {
             description = "позволяет посмотреть матчи лиги чемпионов за конкретный период"
     )
     public ResponseEntity<FootballApiDTO> getChampionsLeagueMatches(
-            @RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
-            @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo
+            @RequestParam(value = "dateFrom", defaultValue = "2023-10-03") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate dateFrom,
+            @RequestParam(value = "dateTo", defaultValue = "2023-10-03") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate dateTo
     ) {
         val result =
                 footballDataOrgService.getChampionsLeagueMatches(dateFrom, dateTo);
@@ -46,8 +48,10 @@ public class FootballDataOrgMatchesController {
     )
     public ResponseEntity<Boolean> getChampionsLeagueMatchesByDatesAndSendToTelegram(
             @RequestParam("chatId") String chatId,
-            @RequestParam("dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
-            @RequestParam("dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo
+            @RequestParam(value = "dateFrom", defaultValue = "2023-10-03") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate dateFrom,
+            @RequestParam(value = "dateTo", defaultValue = "2023-10-03") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate dateTo
     ) {
         footballDataOrgService.getChampionsLeagueMatchesByDatesAndSendToTelegram(chatId, dateFrom, dateTo);
         return ResponseEntity.ok(true);

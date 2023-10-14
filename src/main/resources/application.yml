@@ -37,14 +37,11 @@ spring:
     #disable-swagger-default-url: true
 
 app:
-  mail-server:
-    username: ${MY_APP_MAIL_USER_NAME:}
   telegram:
     bot:
       token: ${TELEGRAM_BOT_TOKEN:secret}
-      send-msg-post-url: ${TELEGRAM_SEND-MSG-POST-URL:https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s}
-      chat:
-        id:
-          lamardinho: ${LAMARDINHO:367222121}
+      send-msg-post-url-template: ${TELEGRAM_SEND-MSG-POST-URL-TEMPLATE:https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s}
+    chat-id:
+      owner: ${OWNER_CHAT_ID:1}
   football-data-org:
     token: ${FOOTBALL_DATA_ORG_TOKEN:secret}
