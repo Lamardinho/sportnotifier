@@ -44,19 +44,21 @@ docker stop sportnotifier && docker rm sportnotifier && docker rmi Image slezkin
 
 # : СОБИРАЕМ И ПУШИМ:
 # стандарт (AMD):
-./gradlew clean build &&
-docker build -t slezkin23/sportnotifier:amd64 --build-arg SPRING_PROFILES_ACTIVE=vdsina . &&
-docker push slezkin23/sportnotifier:amd64
+echo && echo CLEAN_n_BUILD_JAR: && ./gradlew clean build &&
+echo && echo BUILD_IMAGE: && docker build -t slezkin23/sportnotifier:amd64 --build-arg SPRING_PROFILES_ACTIVE=vdsina . &&
+echo && echo PUSH: && docker push slezkin23/sportnotifier:amd64
     or (ARM):
 # для linux/arm64
-./gradlew clean build &&
-docker buildx build --platform linux/arm64  -t slezkin23/sportnotifier:arm64 --build-arg SPRING_PROFILES_ACTIVE=vdsina . &&
-docker push slezkin23/sportnotifier:arm64
-# для всех сразу:
+echo && echo CLEAN_n_BUILD_JAR: && ./gradlew clean build &&
+echo && echo BUILD_IMAGE: && docker buildx build --platform linux/arm64  -t slezkin23/sportnotifier:arm64 --build-arg SPRING_PROFILES_ACTIVE=vdsina . &&
+echo && echo PUSH: && docker push slezkin23/sportnotifier:arm64
+
+# ДЛЯ ВСЕХ СРАЗУ:
+echo && echo BUILD_FOR_AMD: &&
 ./gradlew clean build &&
 docker build -t slezkin23/sportnotifier:amd64 --build-arg SPRING_PROFILES_ACTIVE=vdsina . &&
 docker push slezkin23/sportnotifier:amd64 &&
-echo &&
+echo && echo BUILD_FOR_ARM: &&
 ./gradlew clean build &&
 docker buildx build --platform linux/arm64  -t slezkin23/sportnotifier:arm64 --build-arg SPRING_PROFILES_ACTIVE=vdsina . &&
 docker push slezkin23/sportnotifier:arm64
