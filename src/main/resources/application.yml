@@ -35,6 +35,9 @@ spring:
     #packagesToScan: com.example.just_project
     #swagger-ui:
     #disable-swagger-default-url: true
+  security:
+    user:
+      password: ${DEFAULT_PASSWORD:hello_world}
 
 app:
   telegram:
@@ -45,3 +48,5 @@ app:
       owner: ${OWNER_CHAT_ID:1}
   football-data-org:
     token: ${FOOTBALL_DATA_ORG_TOKEN:secret}
+    scheduler:
+      conditional: ${FOOTBALL_DATA_ORG_SCHEDULER_CONDITIONAL:false}
