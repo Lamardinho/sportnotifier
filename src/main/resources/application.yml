@@ -1,17 +1,32 @@
 server:
   port: ${PORT:8090}
 spring:
-  #datasource:
-  #driver-class-name: org.postgresql.Driver
-  #username: ${DB_USER:postgres}
-  #password: ${DB_PASSWORD:}
-  #url: jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5432}/${DATABASE_NAME:just_project}?currentSchema=public
+  datasource:
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+    url: jdbc:h2:mem:~/sportnotifier;MODE=postgresql;
+  h2:
+    console.enabled: true
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: com.lamardinho.sportnotifier.config.H2IdentifierNamingStrategy
+    properties:
+      hibernate:
+        show_sql: false
+        use_sql_comments: true
+        format_sql: true
+        globally-quoted-identifiers: true
   liquibase:
     enabled: off
-    change-log: db/changelog/db-master.xml
-  jpa:
-    generate-ddl: false
-    open-in-view: false
+  sql:
+    init:
+      data-locations:
+        - classpath:sql/test.sql
   mail:
     #default-encoding: UTF-8
     host: smtp.yandex.ru
@@ -32,9 +47,9 @@ spring:
     #type: simple
 
     #springdoc:
-    #packagesToScan: com.example.just_project
+    # packagesToScan: com.example.sportnotifier
     #swagger-ui:
-    #disable-swagger-default-url: true
+    # disable-swagger-default-url: true
   security:
     user:
       password: ${DEFAULT_PASSWORD:hello_world}

@@ -20,8 +20,3 @@ spring:
     enabled: off
 
 debug: true
-
-app:
-  football-data-org:
-    scheduler:
-      conditional: ${FOOTBALL_DATA_ORG_SCHEDULER_CONDITIONAL:false}
