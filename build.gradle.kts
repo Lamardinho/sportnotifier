@@ -28,10 +28,10 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion")
     implementation("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
     implementation("org.springframework.boot:spring-boot-starter-security:$springBootVersion")
-    // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
-    implementation("org.springdoc:springdoc-openapi-ui:1.7.0")
+    implementation("org.springdoc:springdoc-openapi-ui:1.7.0")      // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
 
     implementation("org.liquibase:liquibase-core:4.24.0")
+    implementation("org.postgresql:postgresql:42.6.0")      // https://mvnrepository.com/artifact/org.postgresql/postgresql
     runtimeOnly("com.h2database:h2:2.2.224")
 
     implementation("org.projectlombok:lombok:$lombokVersion")
@@ -42,6 +42,6 @@ dependencies {
 }
 
 tasks.withType<Test> {
-    maxParallelForks = 4
+    maxParallelForks = 1
     useJUnitPlatform()
 }
