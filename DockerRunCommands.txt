@@ -1,5 +1,8 @@
 # КОМАНДЫ:
 
+# установка postgres:
+docker run -d --name postgres -e POSTGRES_PASSWORD=password -p 5432:5432 postgres:16.0-alpine3.18
+
 #билдим проект:
 ./gradlew clean build
 
