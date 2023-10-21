@@ -9,6 +9,8 @@ spring:
   h2:
     console.enabled: true
   jpa:
+    generate-ddl: false
+    open-in-view: false
     database-platform: org.hibernate.dialect.H2Dialect
     defer-datasource-initialization: true
     hibernate:
