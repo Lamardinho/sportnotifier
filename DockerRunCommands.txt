@@ -1,7 +1,12 @@
 # КОМАНДЫ:
 
-# установка postgres:
-docker run -d --name postgres -e POSTGRES_PASSWORD=password -p 5432:5432 postgres:16.0-alpine3.18
+# создаём свою сеть:
+sudo docker network create sportnotifier_network
+# посмотреть какие контейнеры находятся в сети:
+sudo docker network inspect sportnotifier_network
+
+# установка postgres (вставь пароль сразу какой требуется, чтобы потом не переделывать):
+sudo docker run -d --network sportnotifier_network --restart always --name postgres -e POSTGRES_PASSWORD=password -p 5432:5432 postgres:16.0-alpine3.18
 
 #билдим проект:
 ./gradlew clean build
@@ -72,16 +77,16 @@ docker push slezkin23/sportnotifier:arm64
 echo && echo STOP: && docker stop sportnotifier &&
 echo && echo REMOVE_CONTAINER: && docker rm sportnotifier &&
 echo && echo REMOVE_IMAGE: && docker rmi slezkin23/sportnotifier:amd64 &&
-echo && echo PULL: && docker pull slezkin23/sportnotifier:amd64 &&
-echo && echo RUN: && docker run -it --name sportnotifier -p 8090:8090 -e SPRING_PROFILES_ACTIVE=vdsina -d --restart always slezkin23/sportnotifier:amd64 &&
+#echo && echo PULL: && docker pull slezkin23/sportnotifier:amd64 &&
+echo && echo RUN: && docker run -it --name sportnotifier -p 8090:8090 -e SPRING_PROFILES_ACTIVE=vdsina -d --network sportnotifier_network --restart always slezkin23/sportnotifier:amd64 &&
 echo && echo LOGS: && docker logs -f sportnotifier
 
 # for for ARM
 echo && echo STOP: && sudo docker stop sportnotifier &&
 echo && echo REMOVE_CONTAINER: && sudo docker rm sportnotifier &&
 echo && echo REMOVE_IMAGE: && sudo docker rmi slezkin23/sportnotifier:arm64 &&
-echo && echo PULL: && sudo docker pull slezkin23/sportnotifier:arm64 &&
-echo && echo RUN: && sudo docker run -it --name sportnotifier -p 8090:8090 -e SPRING_PROFILES_ACTIVE=vdsina -d --restart always slezkin23/sportnotifier:arm64 &&
+#echo && echo PULL: && sudo docker pull slezkin23/sportnotifier:arm64 &&
+echo && echo RUN: && sudo docker run -it --name sportnotifier -p 8090:8090 -e SPRING_PROFILES_ACTIVE=vdsina -d --network sportnotifier_network --restart always slezkin23/sportnotifier:arm64 &&
 echo && echo LOGS: && sudo docker logs -f sportnotifier
 
 ### logs:
