@@ -24,7 +24,7 @@ spring:
         format_sql: true
         globally-quoted-identifiers: true
   liquibase:
-    enabled: off
+    enabled: off # WARN !!! if on defer-datasource-initialization: false else defer-datasource-initialization: true
   sql:
     init:
       data-locations:

@@ -25,23 +25,16 @@ public class FootballDataOrgScheduler {
     @Value("${app.telegram.chat-id.owner}")
     private String chatID;
 
-    private boolean sent;
+    private LocalDate date;
 
-    @Scheduled(fixedRate = 12, initialDelay = 0, timeUnit = TimeUnit.HOURS)
+    @Scheduled(initialDelay = 0, fixedRate = 10, timeUnit = TimeUnit.SECONDS)
     public void updateToday() {
-        if (sent) {
-            return;
-        }
         val now = LocalDate.now();
-        sent = footballDataOrgService.getChampionsLeagueMatchesByDatesAndSendToTelegram(
-                chatID, now, now
-        );
-    }
-
-    @Scheduled(cron = "0 0 10 * * ?")
-    public void sent() {
-        sent = false;
-        log.info("Good morning");
-        updateToday();
+        if (date == null || now.isAfter(date)) {
+            footballDataOrgService.getChampionsLeagueMatchesByDatesAndSendToTelegram(
+                    chatID, now, now
+            );
+        }
+        date = now;
     }
 }
