@@ -1,8 +1,9 @@
-var lombokVersion: String = "1.18.32"
+var springBootVersion: String = "2.7.0"
+var lombokVersion: String = "1.18.30"
 
 plugins {
     java
-    id("org.springframework.boot") version "3.2.4"  // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter/3.2.4
+    id("org.springframework.boot") version "2.7.0"
     id("io.spring.dependency-management") version "1.1.3"
 }
 
@@ -10,7 +11,7 @@ group = "com.lamardinho"
 version = "0.0.1-SNAPSHOT"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_11
 }
 
 configurations {
@@ -24,9 +25,11 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-security")
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-gradle-plugin
+    implementation("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion")
+    implementation("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
+    implementation("org.springframework.boot:spring-boot-starter-security:$springBootVersion")
     implementation("org.springdoc:springdoc-openapi-ui:1.8.0")      // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
 
     implementation("org.liquibase:liquibase-core:4.24.0")

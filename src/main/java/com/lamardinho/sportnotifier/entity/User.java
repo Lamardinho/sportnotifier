@@ -1,12 +1,12 @@
 package com.lamardinho.sportnotifier.entity;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import javax.persistence.*;
 
 @Table(schema = "public", name = "users")
 @Entity
