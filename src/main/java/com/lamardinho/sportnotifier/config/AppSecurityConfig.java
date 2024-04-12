@@ -20,6 +20,6 @@ public class AppSecurityConfig {
     public WebSecurityCustomizer webSecurityCustomizer() {
         return web -> web
                 .ignoring()
-                .antMatchers("/h2-console/**");
+                .requestMatchers("/h2-console/**");
     }
 }

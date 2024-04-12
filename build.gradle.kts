@@ -1,9 +1,8 @@
-var springBootVersion: String = "3.2.4" // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter/3.2.4
 var lombokVersion: String = "1.18.32"
 
 plugins {
     java
-    id("org.springframework.boot") version "2.7.0"
+    id("org.springframework.boot") version "3.2.4"  // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter/3.2.4
     id("io.spring.dependency-management") version "1.1.3"
 }
 
