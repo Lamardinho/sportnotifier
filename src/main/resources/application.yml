@@ -50,7 +50,7 @@ spring:
 
     #springdoc:
     # packagesToScan: com.example.sportnotifier
-    #swagger-ui:
+    #swagger-ui:  # http://127.0.0.1:8090/swagger-ui/index.html
     # disable-swagger-default-url: true
   security:
     user:
