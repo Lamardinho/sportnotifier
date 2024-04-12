@@ -1,12 +1,10 @@
 package com.lamardinho.sportnotifier.messages.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
-
-import javax.validation.constraints.NotBlank;
-
 
 @Schema(description = "Для отправки сообщений")
 @Data

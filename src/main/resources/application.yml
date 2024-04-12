@@ -1,17 +1,34 @@
 server:
   port: ${PORT:8090}
 spring:
-  #datasource:
-  #driver-class-name: org.postgresql.Driver
-  #username: ${DB_USER:postgres}
-  #password: ${DB_PASSWORD:}
-  #url: jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5432}/${DATABASE_NAME:just_project}?currentSchema=public
-  liquibase:
-    enabled: off
-    change-log: db/changelog/db-master.xml
+  datasource:
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+    url: jdbc:h2:mem:~/sportnotifier;MODE=postgresql;
+  h2:
+    console.enabled: true
   jpa:
     generate-ddl: false
     open-in-view: false
+    database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: com.lamardinho.sportnotifier.config.H2IdentifierNamingStrategy
+    properties:
+      hibernate:
+        show_sql: false
+        use_sql_comments: true
+        format_sql: true
+        globally-quoted-identifiers: true
+  liquibase:
+    enabled: off # WARN !!! if on defer-datasource-initialization: false else defer-datasource-initialization: true
+  sql:
+    init:
+      data-locations:
+        - classpath:sql/test.sql
   mail:
     #default-encoding: UTF-8
     host: smtp.yandex.ru
@@ -32,19 +49,21 @@ spring:
     #type: simple
 
     #springdoc:
-    #packagesToScan: com.example.just_project
-    #swagger-ui:
-    #disable-swagger-default-url: true
+    # packagesToScan: com.example.sportnotifier
+    #swagger-ui:  # http://127.0.0.1:8090/swagger-ui/index.html
+    # disable-swagger-default-url: true
+  security:
+    user:
+      password: ${DEFAULT_PASSWORD:hello_world}
 
 app:
-  mail-server:
-    username: ${MY_APP_MAIL_USER_NAME:}
   telegram:
     bot:
       token: ${TELEGRAM_BOT_TOKEN:secret}
-      send-msg-post-url: ${TELEGRAM_SEND-MSG-POST-URL:https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s}
-      chat:
-        id:
-          lamardinho: ${LAMARDINHO:367222121}
+      send-msg-post-url-template: ${TELEGRAM_SEND-MSG-POST-URL-TEMPLATE:https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s}
+    chat-id:
+      owner: ${OWNER_CHAT_ID:1}
   football-data-org:
     token: ${FOOTBALL_DATA_ORG_TOKEN:secret}
+    scheduler:
+      conditional: ${FOOTBALL_DATA_ORG_SCHEDULER_CONDITIONAL:false}
