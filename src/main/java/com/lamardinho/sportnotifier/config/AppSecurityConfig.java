@@ -8,18 +8,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 public class AppSecurityConfig {
 
-    /*@Bean
-    public SecurityWebFilterChain securityWebFilterChain(@NonNull ServerHttpSecurity http) {
-        return http.authorizeExchange()
-                .pathMatchers("/actuator/**").permitAll()
-                .anyExchange().authenticated()
-                .and().build();
-    }*/
-
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return web -> web
                 .ignoring()
-                .antMatchers("/h2-console/**");
+                .requestMatchers("/h2-console/**");
     }
 }

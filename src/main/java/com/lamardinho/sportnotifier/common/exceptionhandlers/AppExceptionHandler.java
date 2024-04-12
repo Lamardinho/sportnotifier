@@ -18,13 +18,13 @@ public class AppExceptionHandler {
 
     @ExceptionHandler(value = HttpClientErrorException.BadRequest.class)
     public ResponseEntity<String> handleBadRequestException(@NonNull HttpClientErrorException.BadRequest ex) {
-        val errorMessage = "Error " + ex.getRawStatusCode() + ": " + ex.getResponseBodyAsString();
+        val errorMessage = "Error " + ex.getStatusCode() + ": " + ex.getResponseBodyAsString();
         log.error(errorMessage, ex);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
     }
 
     @ExceptionHandler(value = NullPointerException.class)
-    public ResponseEntity<ContractResult<String>> handle(@NonNull Exception ex) {
+    public ResponseEntity<ContractResult<String>> nullPointerHandle(@NonNull Exception ex) {
         log.error(AppMsgErrors.AN_UNEXPECTED_ERROR_OCCURRED_EN, ex);
 
         val contractResult = new ContractResult<String>();
