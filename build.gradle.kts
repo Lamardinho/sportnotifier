@@ -33,6 +33,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
     implementation("org.springframework.boot:spring-boot-starter-security:$springBootVersion")
     implementation("org.springdoc:springdoc-openapi-ui:1.8.0")      // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
+    // Уже есть в какой то либе, но там версия с уязвимостями. Указываем принудительно:
+    implementation("org.apache.commons:commons-compress:1.26.1")     // https://mvnrepository.com/artifact/org.apache.commons/commons-compress
 
     implementation("org.liquibase:liquibase-core:4.24.0")
     runtimeOnly("org.postgresql:postgresql:42.7.3")      // https://mvnrepository.com/artifact/org.postgresql/postgresql
