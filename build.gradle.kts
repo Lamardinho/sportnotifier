@@ -32,7 +32,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion")
     implementation("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
     implementation("org.springframework.boot:spring-boot-starter-security:$springBootVersion")
-    implementation("org.springdoc:springdoc-openapi-ui:1.8.0")      // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")   // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui
     // Уже есть в какой то либе, но там версия с уязвимостями. Указываем принудительно:
     implementation("org.apache.commons:commons-compress:1.26.1")     // https://mvnrepository.com/artifact/org.apache.commons/commons-compress
 
@@ -44,6 +45,7 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.security:spring-security-test")
     testAnnotationProcessor("org.projectlombok:lombok:$lombokVersion")
 }
 

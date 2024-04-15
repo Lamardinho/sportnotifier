@@ -58,6 +58,10 @@ spring:
     user:
       password: ${DEFAULT_PASSWORD:hello_world}
 
+springdoc:
+  api-docs:
+    path: /api-docs
+
 app:
   telegram:
     bot:
