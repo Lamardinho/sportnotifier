@@ -1,4 +1,4 @@
-package com.lamardinho.sportnotifier.footballdataorg.service;
+package com.lamardinho.sportnotifier.footballdataorg.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lamardinho.sportnotifier.footballdataorg.dto.MatchDTO;
@@ -15,8 +15,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class FootballDataOrgServiceTest {
 
-    private final FootballDataOrgService footballDataOrgService =
-            new FootballDataOrgService(
+    private final FootballDataOrgServiceImpl footballDataOrgService =
+            new FootballDataOrgServiceImpl(
                     new ObjectMapper(),
                     new RestTemplate(),
                     new TelegramMessageServiceImpl(new RestTemplate())

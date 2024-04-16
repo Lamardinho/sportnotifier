@@ -5,7 +5,7 @@ spring:
     driver-class-name: org.h2.Driver
     username: sa
     password:
-    url: jdbc:h2:mem:~/sportnotifier;MODE=postgresql;
+    url: jdbc:h2:mem:~/sportnotifier;MODE=postgresql;DB_CLOSE_DELAY=-1
     tomcat:
       connection-properties: useUnicode=true;characterEncoding=utf-8
   h2:
@@ -16,21 +16,21 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     defer-datasource-initialization: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
       naming:
         physical-strategy: com.lamardinho.sportnotifier.config.H2IdentifierNamingStrategy
     properties:
       hibernate:
         show_sql: false
-        use_sql_comments: true
-        format_sql: true
+        use_sql_comments: false
+        format_sql: false
         globally-quoted-identifiers: true
   liquibase:
-    enabled: off # WARN !!! if on defer-datasource-initialization: false else defer-datasource-initialization: true
+    enabled: off # WARN !!! if liquibase "on" -> defer-datasource-initialization: false else defer-datasource-initialization: true
   sql:
     init:
       data-locations:
-        - classpath:sql/test.sql
+      # WARN в дефолтном профиле не включаем!!!
   mail:
     #default-encoding: UTF-8
     host: smtp.yandex.ru

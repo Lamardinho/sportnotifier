@@ -57,3 +57,7 @@ tasks.withType<Test> {
 tasks.named<BootJar>("bootJar") {
     archiveFileName = "sportnotifier.jar"
 }
+
+tasks.test {
+    systemProperty("spring.profiles.active", "test")
+}
