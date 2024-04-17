@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
+    url: jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5442}/${DATABASE_NAME:sportnotifier}?currentSchema=public&useUnicode=true&characterEncoding=UTF-8
+  jpa:
+    database-platform: "org.hibernate.dialect.PostgreSQLDialect"
+    defer-datasource-initialization: false
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: com.lamardinho.sportnotifier.config.H2IdentifierNamingStrategy
+    properties:
+      hibernate:
+        show_sql: false
+        use_sql_comments: false
+        format_sql: false
+        globally-quoted-identifiers: true
+  liquibase:
+    enabled: on # WARN !!! if liquibase "on" -> defer-datasource-initialization: false else defer-datasource-initialization: true
+    change-log: db/changelog/db-master.xml

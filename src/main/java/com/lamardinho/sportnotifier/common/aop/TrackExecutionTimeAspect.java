@@ -1,5 +1,6 @@
 package com.lamardinho.sportnotifier.common.aop;
 
+import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import lombok.val;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -15,7 +16,7 @@ import static java.lang.System.currentTimeMillis;
 public class TrackExecutionTimeAspect {
 
     @Around("@annotation(com.lamardinho.sportnotifier.common.aop.TrackExecutionTime)")
-    public Object executionTime(ProceedingJoinPoint point) throws Throwable {
+    public Object executionTime(@NonNull ProceedingJoinPoint point) throws Throwable {
         val startTime = currentTimeMillis();
         val object = point.proceed();
         log.info(point.getSignature() + ". " + "Track execution time: " + (currentTimeMillis() - startTime) + "ms");

@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 @RequiredArgsConstructor
 @Validated
-@Profile("!local")
+@Profile({"prod", "vdsina"})
 public class TelegramMessageServiceImpl implements TelegramMessageService {
 
     @NonNull
