@@ -5,7 +5,7 @@ spring:
     driver-class-name: org.h2.Driver
     username: sa
     password:
-    url: jdbc:h2:mem:~/sportnotifier;MODE=postgresql;DB_CLOSE_DELAY=-1
+    url: jdbc:h2:mem:~/sportnotifier;DB_CLOSE_DELAY=-1
     tomcat:
       connection-properties: useUnicode=true;characterEncoding=utf-8
   h2:
@@ -25,35 +25,30 @@ spring:
         use_sql_comments: false
         format_sql: false
         globally-quoted-identifiers: true
-  liquibase:
-    enabled: off # WARN !!! if liquibase "on" -> defer-datasource-initialization: false else defer-datasource-initialization: true
-  sql:
-    init:
-      data-locations:
-      # WARN в дефолтном профиле не включаем!!!
-  mail:
-    #default-encoding: UTF-8
-    host: smtp.yandex.ru
-    port: 465
-    username: ${MAIL_SERVER_USERNAME:secret}
-    password: ${MAIL_SERVER_PASSWORD:secret}
-    protocol: smtp
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-          ssl:
-            enable: true
-    test-connection: false
-    #cache:
-    #type: simple
-
-    #springdoc:
-    # packagesToScan: com.example.sportnotifier
-    #swagger-ui:  # http://127.0.0.1:8090/swagger-ui/index.html
-    # disable-swagger-default-url: true
+    #  liquibase:
+    #    enabled: off # WARN !!! if liquibase "on" -> defer-datasource-initialization: false else defer-datasource-initialization: true
+    sql:
+      init:
+        data-locations:
+        # WARN в дефолтном профиле не включаем!!!
+  #  mail:
+  #    #default-encoding: UTF-8
+  #    host: smtp.yandex.ru
+  #    port: 465
+  #    username: ${MAIL_SERVER_USERNAME:secret}
+  #    password: ${MAIL_SERVER_PASSWORD:secret}
+  #    protocol: smtp
+  #    properties:
+  #      mail:
+  #        smtp:
+  #          auth: true
+  #          starttls:
+  #            enable: true
+  #          ssl:
+  #            enable: true
+  #    test-connection: false
+  #    #cache:
+  #    #type: simple
   security:
     user:
       password: ${DEFAULT_PASSWORD:hello_world}
