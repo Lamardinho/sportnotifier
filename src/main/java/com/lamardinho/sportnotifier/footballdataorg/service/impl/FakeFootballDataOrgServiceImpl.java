@@ -17,13 +17,12 @@ import java.time.LocalDate;
 public class FakeFootballDataOrgServiceImpl implements FootballDataOrgService {
 
     @Override
-    public boolean getChampionsLeagueMatchesByDatesAndSendToTelegram(
+    public void checkAndNotifiesChampionsLeagueMatchesByDates(
             @NonNull String chatID,
             @NonNull LocalDate dateFrom,
             @NonNull LocalDate dateTo
     ) {
         log.info(FakeFootballDataOrgServiceImpl.class + ": getChampionsLeagueMatchesByDatesAndSendToTelegram");
-        return true;
     }
 
     @Override

@@ -46,14 +46,14 @@ public class FootballDataOrgMatchesController {
             summary = "для тестов: отправка расписания",
             description = "для тестов: отправляет конкретному пользователю сообщение о матчах лиги чемпионов за указанный период времени"
     )
-    public ResponseEntity<Boolean> getChampionsLeagueMatchesByDatesAndSendToTelegram(
+    public ResponseEntity<Boolean> checkAndNotifiesChampionsLeagueMatchesByDates(
             @RequestParam("chatId") String chatId,
             @RequestParam(value = "dateFrom", defaultValue = "2023-10-03") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
             LocalDate dateFrom,
             @RequestParam(value = "dateTo", defaultValue = "2023-10-03") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
             LocalDate dateTo
     ) {
-        footballDataOrgService.getChampionsLeagueMatchesByDatesAndSendToTelegram(chatId, dateFrom, dateTo);
+        footballDataOrgService.checkAndNotifiesChampionsLeagueMatchesByDates(chatId, dateFrom, dateTo);
         return ResponseEntity.ok(true);
     }
 }

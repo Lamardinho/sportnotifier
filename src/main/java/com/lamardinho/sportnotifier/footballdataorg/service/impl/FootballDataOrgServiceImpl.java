@@ -41,7 +41,7 @@ public class FootballDataOrgServiceImpl implements FootballDataOrgService {
     private String token;
 
     @Override
-    public boolean getChampionsLeagueMatchesByDatesAndSendToTelegram(
+    public void checkAndNotifiesChampionsLeagueMatchesByDates(
             @NonNull String chatID,
             @NonNull LocalDate dateFrom,
             @NonNull LocalDate dateTo
@@ -50,11 +50,10 @@ public class FootballDataOrgServiceImpl implements FootballDataOrgService {
         val matches = dto.getMatches();
         if (matches.isEmpty()) {
             log.info(format("В указанном диапазоне нет матчей (%s - %s)", dateFrom, dateTo));
-            return false;
         }
         val msg = createMatchesString(matches, dateFrom, dateTo);
+        log.info(msg);
         telegramMessageService.sendMessage(new TelegramSendMessageDTO(chatID, msg));
-        return true;
     }
 
     @Override

@@ -12,7 +12,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.concurrent.TimeUnit;
 
 @Component
 @ConditionalOnProperty(value = "app.football-data-org.scheduler.conditional", havingValue = "true")
@@ -29,11 +28,11 @@ public class FootballDataOrgScheduler {
 
     private LocalDate date;
 
-    @Scheduled(initialDelay = 0, fixedRate = 10, timeUnit = TimeUnit.SECONDS)
+    @Scheduled(cron = "0 0 10 * * *")
     public void updateToday() {
         val now = LocalDate.now();
         if (date == null || now.isAfter(date)) {
-            footballDataOrgService.getChampionsLeagueMatchesByDatesAndSendToTelegram(
+            footballDataOrgService.checkAndNotifiesChampionsLeagueMatchesByDates(
                     chatID, now, now
             );
         }

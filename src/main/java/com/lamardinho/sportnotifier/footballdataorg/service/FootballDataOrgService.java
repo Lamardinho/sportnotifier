@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 public interface FootballDataOrgService {
 
-    boolean getChampionsLeagueMatchesByDatesAndSendToTelegram(
+    void checkAndNotifiesChampionsLeagueMatchesByDates(
             @NonNull String chatID,
             @NonNull LocalDate dateFrom,
             @NonNull LocalDate dateTo
