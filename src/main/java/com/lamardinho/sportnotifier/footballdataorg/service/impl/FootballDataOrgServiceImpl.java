@@ -54,7 +54,6 @@ public class FootballDataOrgServiceImpl implements FootballDataOrgService {
             val msg = createMatchesString(matches, dateFrom, dateTo);
             log.info(msg);
             telegramMessageService.sendMessage(new TelegramSendMessageDTO(chatID, msg));
-
         }
     }
 
