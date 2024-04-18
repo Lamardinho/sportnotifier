@@ -22,7 +22,7 @@ public class FakeFootballDataOrgServiceImpl implements FootballDataOrgService {
             @NonNull LocalDate dateFrom,
             @NonNull LocalDate dateTo
     ) {
-        log.info(FakeFootballDataOrgServiceImpl.class + ": getChampionsLeagueMatchesByDatesAndSendToTelegram");
+        log.info("{}: getChampionsLeagueMatchesByDatesAndSendToTelegram called", FakeFootballDataOrgServiceImpl.class);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class FakeFootballDataOrgServiceImpl implements FootballDataOrgService {
             @NonNull LocalDate dateFrom,
             @NonNull LocalDate dateTo
     ) {
-        log.info(FakeFootballDataOrgServiceImpl.class + ": getChampionsLeagueMatches");
+        log.info("{}: getChampionsLeagueMatches", FakeFootballDataOrgServiceImpl.class);
         return new FootballApiDTO();
     }
 }
