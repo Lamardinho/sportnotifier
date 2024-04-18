@@ -50,10 +50,12 @@ public class FootballDataOrgServiceImpl implements FootballDataOrgService {
         val matches = dto.getMatches();
         if (matches.isEmpty()) {
             log.info(format("В указанном диапазоне нет матчей (%s - %s)", dateFrom, dateTo));
+        } else {
+            val msg = createMatchesString(matches, dateFrom, dateTo);
+            log.info(msg);
+            telegramMessageService.sendMessage(new TelegramSendMessageDTO(chatID, msg));
+
         }
-        val msg = createMatchesString(matches, dateFrom, dateTo);
-        log.info(msg);
-        telegramMessageService.sendMessage(new TelegramSendMessageDTO(chatID, msg));
     }
 
     @Override
