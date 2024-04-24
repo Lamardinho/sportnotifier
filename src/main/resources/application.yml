@@ -60,13 +60,13 @@ springdoc:
 management:
   endpoint:
     health:
-      show-details: never # hide variable values
+      show-details: when_authorized
     env:
-      show-values: when_authorized
+      show-values: never  # hide variable values
   endpoints:
     web:
       exposure:
-        include: info, health, env
+        include: info, health, env, metrics
 
 app:
   telegram:

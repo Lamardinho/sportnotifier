@@ -15,8 +15,10 @@ public class AppSecurityConfig {
                 .ignoring()
                 .requestMatchers(
                         "/h2-console/**",
+
                         "/actuator",
-                        "/actuator/health"
+                        "/actuator/health",
+                        "/actuator/metrics"
                 );
     }
 
