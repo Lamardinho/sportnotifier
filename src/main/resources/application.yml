@@ -25,11 +25,11 @@ spring:
         use_sql_comments: false
         format_sql: false
         globally-quoted-identifiers: true
-    #  liquibase:
-    #    enabled: off # WARN !!! if liquibase "on" -> defer-datasource-initialization: false else defer-datasource-initialization: true
-    sql:
-      init:
-        data-locations:
+        #  liquibase:
+        #    enabled: off # WARN !!! if liquibase "on" -> defer-datasource-initialization: false else defer-datasource-initialization: true
+        #sql:
+        #init:
+        #data-locations:
         # WARN в дефолтном профиле не включаем!!!
   #  mail:
   #    #default-encoding: UTF-8
@@ -56,6 +56,17 @@ spring:
 springdoc:
   api-docs:
     path: /api-docs
+
+management:
+  endpoint:
+    health:
+      show-details: when_authorized
+    env:
+      show-values: never  # hide variable values
+  endpoints:
+    web:
+      exposure:
+        include: info, health, env, metrics
 
 app:
   telegram:
