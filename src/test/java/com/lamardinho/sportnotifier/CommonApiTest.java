@@ -14,27 +14,27 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @Transactional
 @AutoConfigureMockMvc
-class SwaggerTest {
+class CommonApiTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    private final static String BASE_URL = "http://localhost:8090/swagger-ui/index.html";
+    private final static String BASE_URL = "http://localhost:8090";
 
     @Test
-    void when_anonymous_then_ok() throws Exception {
+    void register_when_anonymous_then_ok() throws Exception {
         mockMvc.perform(
-                        get(BASE_URL)
+                        get(BASE_URL + "/register")
                 )
                 .andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser(username = "user", roles = "USER")
-    void when_authenticated_then_ok() throws Exception {
+    void register_when_authenticated_then_isForbidden() throws Exception {
         mockMvc.perform(
-                        get(BASE_URL)
+                        get(BASE_URL + "/register")
                 )
-                .andExpect(status().isOk());
+                .andExpect(status().isForbidden());
     }
 }

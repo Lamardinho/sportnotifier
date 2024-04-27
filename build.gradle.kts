@@ -6,6 +6,7 @@ var springWeb: String = "6.1.6"
 val openUiWebMvc = "2.5.0"
 val apacheCommonsCompress = "1.26.1"
 val h2Db = "2.2.224"
+val thymeleafVersion = "3.1.2.RELEASE"
 
 plugins {
     java
@@ -48,6 +49,8 @@ dependencies {
     //implementation("org.liquibase:liquibase-core:4.24.0")
     //runtimeOnly("org.postgresql:postgresql:42.7.3")      // https://mvnrepository.com/artifact/org.postgresql/postgresql
     runtimeOnly("com.h2database:h2:$h2Db")
+
+    //implementation("org.thymeleaf:thymeleaf:$thymeleafVersion")
 
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
 
