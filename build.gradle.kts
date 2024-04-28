@@ -39,7 +39,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-aop")
-    // Уже есть в какой то либе, но версия с уязвимостями. Указываем принудительно более новую:
+    // todo: Уже есть в какой то либе, но версия с уязвимостями. Указываем принудительно более новую:
     implementation("org.springframework:spring-web:$springWeb") // https://mvnrepository.com/artifact/org.springframework/spring-web
 
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$openUiWebMvc")   // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui

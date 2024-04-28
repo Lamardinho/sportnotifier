@@ -1,6 +1,6 @@
 package com.lamardinho.sportnotifier.repository;
 
-import com.lamardinho.sportnotifier.entity.User;
+import com.lamardinho.sportnotifier.config.security.AppUserDetails;
 import lombok.NonNull;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface UserRepository extends CrudRepository<AppUserDetails, Long> {
 
-    Optional<User> findByUsername(@NonNull String username);
+    Optional<AppUserDetails> findByLogin(@NonNull String username);
 }

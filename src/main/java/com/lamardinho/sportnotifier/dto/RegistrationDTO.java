@@ -1,5 +1,6 @@
 package com.lamardinho.sportnotifier.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,21 +10,11 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class RegistrationForm {
+public class RegistrationDTO {
 
-    private String username;
+    @NotBlank
+    private String login;
 
+    @NotBlank
     private String password;
-
-    private String fullname;
-
-    private String street;
-
-    private String city;
-
-    private String state;
-
-    private String zip;
-
-    private String phone;
 }

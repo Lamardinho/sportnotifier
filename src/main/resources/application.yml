@@ -5,7 +5,8 @@ spring:
     driver-class-name: org.h2.Driver
     username: sa
     password:
-    url: jdbc:h2:mem:~/sportnotifier;DB_CLOSE_DELAY=-1
+    url: jdbc:h2:mem:~/sportnotifier;DATABASE_TO_UPPER=false;DB_CLOSE_DELAY=-1
+    #url: jdbc:h2:file:/tmp/db/sportnotifier;AUTO_SERVER=TRUE;DATABASE_TO_UPPER=false;DB_CLOSE_DELAY=-1;
     tomcat:
       connection-properties: useUnicode=true;characterEncoding=utf-8
   h2:
@@ -27,10 +28,11 @@ spring:
         globally-quoted-identifiers: true
         #  liquibase:
         #    enabled: off # WARN !!! if liquibase "on" -> defer-datasource-initialization: false else defer-datasource-initialization: true
-        #sql:
-        #init:
-        #data-locations:
-        # WARN в дефолтном профиле не включаем!!!
+  sql:
+    init:
+      mode: never
+    #data-locations:
+    # WARN в дефолтном профиле не включаем!!!
     #  mail:
     #    #default-encoding: UTF-8
     #    host: smtp.yandex.ru
@@ -49,10 +51,7 @@ spring:
     #    test-connection: false
     #    #cache:
     #    #type: simple
-  security:
-    user:
-      password: ${DEFAULT_PASSWORD:hello_world}
-      roles: USER, APP_ADMIN
+  #security:    user:      password: ${DEFAULT_PASSWORD:user}      roles: USER, APP_ADMIN
 
 springdoc:
   api-docs:

@@ -19,7 +19,7 @@ class CommonApiTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private final static String BASE_URL = "http://localhost:8090";
+    private final static String BASE_URL = "http://localhost:8090/api";
 
     @Test
     void register_when_anonymous_then_ok() throws Exception {
