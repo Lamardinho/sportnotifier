@@ -6,6 +6,7 @@ var springWeb: String = "6.1.6"
 val openUiWebMvc = "2.5.0"
 val apacheCommonsCompress = "1.26.1"
 val h2Db = "2.2.224"
+val thymeleafVersion = "3.1.2.RELEASE"
 
 plugins {
     java
@@ -38,7 +39,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-aop")
-    // Уже есть в какой то либе, но версия с уязвимостями. Указываем принудительно более новую:
+    // todo: Уже есть в какой то либе, но версия с уязвимостями. Указываем принудительно более новую:
     implementation("org.springframework:spring-web:$springWeb") // https://mvnrepository.com/artifact/org.springframework/spring-web
 
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$openUiWebMvc")   // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui

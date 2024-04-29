@@ -1,11 +1,21 @@
 server:
   port: ${PORT:8090}
+  servlet:
+    encoding:
+      force-request: true
+      charset: UTF-8
 spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 50MB
+      max-request-size: 50MB
   datasource:
     driver-class-name: org.h2.Driver
     username: sa
     password:
-    url: jdbc:h2:mem:~/sportnotifier;DB_CLOSE_DELAY=-1
+    url: jdbc:h2:mem:~/sportnotifier;DATABASE_TO_UPPER=false;DB_CLOSE_DELAY=-1
+    #url: jdbc:h2:file:/tmp/db/sportnotifier;AUTO_SERVER=TRUE;DATABASE_TO_UPPER=false;DB_CLOSE_DELAY=-1;
     tomcat:
       connection-properties: useUnicode=true;characterEncoding=utf-8
   h2:
@@ -27,31 +37,30 @@ spring:
         globally-quoted-identifiers: true
         #  liquibase:
         #    enabled: off # WARN !!! if liquibase "on" -> defer-datasource-initialization: false else defer-datasource-initialization: true
-        #sql:
-        #init:
-        #data-locations:
-        # WARN в дефолтном профиле не включаем!!!
-  #  mail:
-  #    #default-encoding: UTF-8
-  #    host: smtp.yandex.ru
-  #    port: 465
-  #    username: ${MAIL_SERVER_USERNAME:secret}
-  #    password: ${MAIL_SERVER_PASSWORD:secret}
-  #    protocol: smtp
-  #    properties:
-  #      mail:
-  #        smtp:
-  #          auth: true
-  #          starttls:
-  #            enable: true
-  #          ssl:
-  #            enable: true
-  #    test-connection: false
-  #    #cache:
-  #    #type: simple
-  security:
-    user:
-      password: ${DEFAULT_PASSWORD:hello_world}
+  sql:
+    init:
+      mode: never
+    #data-locations:
+    # WARN в дефолтном профиле не включаем!!!
+    #  mail:
+    #    #default-encoding: UTF-8
+    #    host: smtp.yandex.ru
+    #    port: 465
+    #    username: ${MAIL_SERVER_USERNAME:secret}
+    #    password: ${MAIL_SERVER_PASSWORD:secret}
+    #    protocol: smtp
+    #    properties:
+    #      mail:
+    #        smtp:
+    #          auth: true
+    #          starttls:
+    #            enable: true
+    #          ssl:
+    #            enable: true
+    #    test-connection: false
+    #    #cache:
+    #    #type: simple
+  #security:    user:      password: ${DEFAULT_PASSWORD:user}      roles: USER, APP_ADMIN
 
 springdoc:
   api-docs:
@@ -62,7 +71,7 @@ management:
     health:
       show-details: when_authorized
     env:
-      show-values: never  # hide variable values
+      show-values: never
   endpoints:
     web:
       exposure:
