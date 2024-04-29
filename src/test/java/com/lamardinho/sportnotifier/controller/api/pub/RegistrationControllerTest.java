@@ -1,4 +1,4 @@
-package com.lamardinho.sportnotifier.controller.api;
+package com.lamardinho.sportnotifier.controller.api.pub;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lamardinho.sportnotifier.config.ControllerTest;

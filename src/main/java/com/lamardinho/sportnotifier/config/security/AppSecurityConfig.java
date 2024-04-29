@@ -24,27 +24,17 @@ public class AppSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(@NonNull HttpSecurity http) throws Exception {
         return http
+                .csrf(AbstractHttpConfigurer::disable)
+                .anonymous(AbstractHttpConfigurer::disable)
                 .httpBasic(configurer -> {
                 })
                 .authorizeHttpRequests(authorize -> authorize
-                        //.anyRequest().authenticated()
-                        .requestMatchers("/api/deny").denyAll()
+                        .requestMatchers("/api/deny").denyAll() // for my tests
 
                         .requestMatchers(
                                 "/actuator/env",
                                 "/h2-console/**"
                         ).hasRole("APP_ADMIN")
-
-                        .requestMatchers(
-                                "/logout",
-                                "/check-authenticated.html",
-                                "/swagger-ui/**"
-                        ).authenticated()
-
-                        /*.requestMatchers(
-                                "/api/registration/**",
-                                "/login"
-                        ).anonymous()*/
 
                         .requestMatchers(
                                 "/public/**",
@@ -56,11 +46,11 @@ public class AppSecurityConfig {
                                 "/actuator/health/**",
                                 "/actuator/metrics/**"
                         ).permitAll()
+
+                        .anyRequest().authenticated()
                 )
                 .formLogin(configurer -> configurer
-                        //.loginPage("/login.html")
-                        .defaultSuccessUrl("/public/hello.html", false))
-                .csrf(AbstractHttpConfigurer::disable)
+                        .defaultSuccessUrl("/main.html", false))
                 .userDetailsService(appUserDetailsService)
                 .build();
     }

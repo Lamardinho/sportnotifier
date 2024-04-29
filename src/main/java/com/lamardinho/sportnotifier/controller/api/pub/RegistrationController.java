@@ -1,4 +1,4 @@
-package com.lamardinho.sportnotifier.controller.api;
+package com.lamardinho.sportnotifier.controller.api.pub;
 
 import com.lamardinho.sportnotifier.dto.RegistrationDTO;
 import com.lamardinho.sportnotifier.service.RegistrationService;
