@@ -1,7 +1,8 @@
 package com.lamardinho.sportnotifier.config.security;
 
 import com.lamardinho.sportnotifier.common.AppException;
-import com.lamardinho.sportnotifier.entity.UserPermission;
+import com.lamardinho.sportnotifier.entity.user.AppUserDetails;
+import com.lamardinho.sportnotifier.entity.user.UserPermission;
 import com.lamardinho.sportnotifier.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,5 @@
-package com.lamardinho.sportnotifier.config.security;
+package com.lamardinho.sportnotifier.entity.user;
 
-import com.lamardinho.sportnotifier.entity.UserPermission;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.Accessors;

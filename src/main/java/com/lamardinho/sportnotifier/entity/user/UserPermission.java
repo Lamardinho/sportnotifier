@@ -1,4 +1,4 @@
-package com.lamardinho.sportnotifier.entity;
+package com.lamardinho.sportnotifier.entity.user;
 
 import jakarta.persistence.*;
 import lombok.*;

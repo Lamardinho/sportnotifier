@@ -59,7 +59,7 @@
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
         </div>
-        <input type="submit" value="Register">
+        <input type="submit" value="Registration">
     </form>
 </div>
 
@@ -70,7 +70,7 @@
             login: document.getElementById("login").value,
             password: document.getElementById("password").value
         };
-        fetch('/api/registration', {
+        fetch('/api/public/registration', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

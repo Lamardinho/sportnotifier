@@ -1,6 +1,6 @@
 package com.lamardinho.sportnotifier.repository;
 
-import com.lamardinho.sportnotifier.config.security.AppUserDetails;
+import com.lamardinho.sportnotifier.entity.user.AppUserDetails;
 import lombok.NonNull;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

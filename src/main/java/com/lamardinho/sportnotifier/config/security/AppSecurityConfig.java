@@ -28,6 +28,7 @@ public class AppSecurityConfig {
                 })
                 .authorizeHttpRequests(authorize -> authorize
                         //.anyRequest().authenticated()
+                        .requestMatchers("/api/deny").denyAll()
 
                         .requestMatchers(
                                 "/actuator/env",
@@ -36,26 +37,24 @@ public class AppSecurityConfig {
 
                         .requestMatchers(
                                 "/logout",
-                                "/check-authenticated.html"
+                                "/check-authenticated.html",
+                                "/swagger-ui/**"
                         ).authenticated()
 
-                        .requestMatchers(
-                                "/api/register/**",
+                        /*.requestMatchers(
+                                "/api/registration/**",
                                 "/login"
-                        ).anonymous()
+                        ).anonymous()*/
 
                         .requestMatchers(
                                 "/public/**",
-                                "/registration.html",
-                                "/swagger-ui/**",
+                                "/api/public/**",
 
                                 // actuator:
                                 "/actuator",
                                 "/actuator/health/**",
                                 "/actuator/metrics/**"
                         ).permitAll()
-
-                        .anyRequest().permitAll()
                 )
                 .csrf(AbstractHttpConfigurer::disable)
                 .userDetailsService(appUserDetailsService)

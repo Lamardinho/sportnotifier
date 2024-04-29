@@ -22,7 +22,8 @@ class SwaggerTest {
     private final static String BASE_URL = "http://localhost:8090/swagger-ui/index.html";
 
     @Test
-    void when_anonymous_then_ok() throws Exception {
+    @WithMockUser(username = "user", roles = "USER")
+    void when_authenticated_then_ok() throws Exception {
         mockMvc.perform(
                         get(BASE_URL)
                 )
@@ -30,11 +31,10 @@ class SwaggerTest {
     }
 
     @Test
-    @WithMockUser(username = "user", roles = "USER")
-    void when_authenticated_then_ok() throws Exception {
+    void when_anonymous_then_forbidden() throws Exception {
         mockMvc.perform(
                         get(BASE_URL)
                 )
-                .andExpect(status().isOk());
+                .andExpect(status().isUnauthorized());
     }
 }
