@@ -49,6 +49,7 @@ public class AppSecurityConfig {
                         .requestMatchers(
                                 "/public/**",
                                 "/api/public/**",
+                                "/login",
 
                                 // actuator:
                                 "/actuator",
@@ -56,6 +57,9 @@ public class AppSecurityConfig {
                                 "/actuator/metrics/**"
                         ).permitAll()
                 )
+                .formLogin(configurer -> configurer
+                        //.loginPage("/login.html")
+                        .defaultSuccessUrl("/public/hello.html", false))
                 .csrf(AbstractHttpConfigurer::disable)
                 .userDetailsService(appUserDetailsService)
                 .build();
