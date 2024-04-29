@@ -1,9 +1,9 @@
 package com.lamardinho.sportnotifier.service.impl;
 
 import com.lamardinho.sportnotifier.common.AppException;
-import com.lamardinho.sportnotifier.entity.user.AppUserDetails;
 import com.lamardinho.sportnotifier.config.util.AppProfile;
 import com.lamardinho.sportnotifier.dto.RegistrationDTO;
+import com.lamardinho.sportnotifier.entity.user.AppUserDetails;
 import com.lamardinho.sportnotifier.repository.UserRepository;
 import com.lamardinho.sportnotifier.service.RegistrationService;
 import lombok.NonNull;
@@ -14,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Profile({AppProfile.PROD, AppProfile.PRE_PROD, AppProfile.STAGE, AppProfile.DEV})
+@Profile({AppProfile.NO_TEST})
 @Service
 @RequiredArgsConstructor
 @Log4j2

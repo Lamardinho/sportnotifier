@@ -14,6 +14,7 @@ public class AppProfile {
     public static final String PRE_PROD = "preprod";
     public static final String STAGE = "stage";
     public static final String DEV = "dev";
+    public static final String LOCAL = "local";
     public static final String TEST = "test";
 
     public static final String NO_TEST = "!test";
