@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    username: user
+    password: user
+    #url: jdbc:h2:mem:~/sportnotifier;DATABASE_TO_UPPER=false;DB_CLOSE_DELAY=-1
+    url: jdbc:h2:file:/tmp/db/sportnotifier;AUTO_SERVER=TRUE;DATABASE_TO_UPPER=false;DB_CLOSE_DELAY=-1;
+    tomcat:
+      connection-properties: useUnicode=true;characterEncoding=utf-8
+  h2:
+    console.enabled: true
+  jpa:
+    generate-ddl: true
+    open-in-view: false
+    database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true # set false if liquibase ON
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: com.lamardinho.sportnotifier.config.H2IdentifierNamingStrategy
+    properties:
+      hibernate:
+        show_sql: false
+        use_sql_comments: false
+        format_sql: false
+        globally-quoted-identifiers: true
+
+  sql:
+    init:
+      mode: always
+      data-locations:
+        - classpath:sql/users.sql
