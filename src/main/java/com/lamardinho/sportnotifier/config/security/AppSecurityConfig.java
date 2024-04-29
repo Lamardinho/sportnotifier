@@ -46,7 +46,7 @@ public class AppSecurityConfig {
 
                         .requestMatchers(
                                 "/public/**",
-                                "/registration.xml",
+                                "/registration.html",
                                 "/swagger-ui/**",
 
                                 // actuator:

@@ -6,11 +6,13 @@ import jakarta.validation.Valid;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/register")
+@RequestMapping("/api/registration")
 @RequiredArgsConstructor
 @Log4j2
 public class RegistrationController {
@@ -18,14 +20,8 @@ public class RegistrationController {
     @NonNull
     private final RegistrationService registrationService;
 
-    @GetMapping
-    @PreAuthorize("isAnonymous()")
-    public String registerForm() {
-        return "registration";
-    }
-
     @PostMapping
-    public String processRegistration(@RequestBody @Valid RegistrationDTO form) {
-        return registrationService.processRegistration(form);
+    public String registration(@RequestBody @Valid RegistrationDTO dto) {
+        return registrationService.processRegistration(dto);
     }
 }

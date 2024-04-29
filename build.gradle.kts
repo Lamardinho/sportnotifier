@@ -50,8 +50,6 @@ dependencies {
     //runtimeOnly("org.postgresql:postgresql:42.7.3")      // https://mvnrepository.com/artifact/org.postgresql/postgresql
     runtimeOnly("com.h2database:h2:$h2Db")
 
-    //implementation("org.thymeleaf:thymeleaf:$thymeleafVersion")
-
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
