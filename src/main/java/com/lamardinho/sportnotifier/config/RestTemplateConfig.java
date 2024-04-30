@@ -1,21 +1,39 @@
 package com.lamardinho.sportnotifier.config;
 
-import org.springframework.boot.web.client.RestTemplateBuilder;
+import lombok.NonNull;
+import lombok.val;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.client.BufferingClientHttpRequestFactory;
+import org.springframework.http.client.ClientHttpRequestFactory;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-import java.time.Duration;
+import java.nio.charset.StandardCharsets;
 
 @Configuration
 public class RestTemplateConfig {
+
     @Bean
     public RestTemplate restTemplate() {
-        return new RestTemplateBuilder()
-                .setConnectTimeout(Duration.ofSeconds(10))
-                .setReadTimeout(Duration.ofSeconds(10))
-                //.requestFactory(HttpComponentsClientHttpRequestFactory::new)
-                //.requestFactory(() -> new HttpComponentsClientHttpRequestFactory(HttpClientBuilder.create().build()))
-                .build();
+        val template = new RestTemplate(clientHttpRequestFactory());
+
+        template.getMessageConverters()
+                .stream()
+                .filter(StringHttpMessageConverter.class::isInstance)
+                .map(StringHttpMessageConverter.class::cast)
+                .forEach(converter -> converter.setDefaultCharset(StandardCharsets.UTF_8));
+
+        return template;
+    }
+
+    private @NonNull ClientHttpRequestFactory clientHttpRequestFactory() {
+        val factory = new SimpleClientHttpRequestFactory();
+
+        factory.setConnectTimeout(10_000);
+        factory.setReadTimeout(10_000);
+
+        return new BufferingClientHttpRequestFactory(factory);
     }
 }
