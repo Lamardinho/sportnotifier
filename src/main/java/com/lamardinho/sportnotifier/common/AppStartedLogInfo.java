@@ -49,6 +49,5 @@ public class AppStartedLogInfo {
                                                                                \s""";
 
         log.info(str);
-        log.info("swagger local: {}", "http://localhost:8090/swagger-ui/index.html");
     }
 }
