@@ -1,5 +1,7 @@
 # КОМАНДЫ:
 
+###################################################### ПОДГОТОВКА ######################################################
+
 # создаём свою сеть:
 sudo docker network create sportnotifier_network
 # посмотреть какие контейнеры находятся в сети:
@@ -8,80 +10,17 @@ sudo docker network inspect sportnotifier_network
 # установка postgres (вставь пароль сразу какой требуется, чтобы потом не переделывать):
 sudo docker run -d --network sportnotifier_network --restart always --name postgres -e POSTGRES_PASSWORD=password -p 5432:5432 postgres:16.0-alpine3.18
 
-#билдим проект:
-./gradlew clean build
+################################################## ПОДГОТОВКА ОБРАЗА ##################################################
 
-#собираем образ:
-# локально:
-docker build -t slezkin23/sportnotifier:amd64 .
-# для удаленного сервера:
-docker build -t slezkin23/sportnotifier:amd64 --build-arg SPRING_PROFILES_ACTIVE=vdsina .
+# СОБИРАЕМ И ПУШИМ В DOCKER HUB ДЛЯ ВСЕХ (AMD / ARM):
+file: sh/build_and_push_to_docker_hub.sh
 
-#запускаем контейнер:
-# локально:
-docker run -it --name sportnotifier -p 8090:8090 --env-file Dockerfile_envs.env -d slezkin23/sportnotifier
-# для удаленного сервера:
-docker run -it --name sportnotifier -p 8090:8090 --env-file Dockerfile_envs.env -e SPRING_PROFILES_ACTIVE=vdsina -d slezkin23/sportnotifier
+# УСТАНОВКА НА СЕРВЕРЕ:
+file: run_to_docker_amd64.sh
+or
+file: run_to_docker_arm64.sh
 
-#######################################################################################################################
-
-# RUN - ALL: всех команд перечисленных выше за 1 раз:
-# локально: сборка образа и запуск контейнера:
-./gradlew clean build && docker build -t slezkin23/sportnotifier:amd64 . && docker run -it --name sportnotifier -p 8090:8090 --env-file Dockerfile_envs.env -d slezkin23/sportnotifier
-# для удаленного сервера:
-./gradlew clean build && docker build -t slezkin23/sportnotifier:amd64 --build-arg SPRING_PROFILES_ACTIVE=vdsina . && docker push slezkin23/sportnotifier:amd64
-
-# запушить образ в hub !!! ток сначала обнови переменные в application.yml
-docker push slezkin23/sportnotifier:amd64
-
-# скачать
-# локально:
-docker pull slezkin23/sportnotifier:amd64 && docker run -it --name sportnotifier -p 8090:8090 -d slezkin23/sportnotifier && docker logs -f sportnotifier
-# на удаленном сервере:
-docker pull slezkin23/sportnotifier:amd64 && docker run -it --name sportnotifier -p 8090:8090 -e SPRING_PROFILES_ACTIVE=vdsina -d slezkin23/sportnotifier && docker logs -f sportnotifier
-
-# на удаленном сервере
-# для полного удаления контейнера и образа:
-docker stop sportnotifier && docker rm sportnotifier && docker rmi Image slezkin23/sportnotifier
-# или полная переустановка на удаленном сервере:
-docker stop sportnotifier && docker rm sportnotifier && docker rmi Image slezkin23/sportnotifier && docker pull slezkin23/sportnotifier:amd64 && docker run -it --name sportnotifier -p 8090:8090 -e SPRING_PROFILES_ACTIVE=vdsina -d slezkin23/sportnotifier && docker logs -f sportnotifier
-
-#######################################################################################################################
-# копипаста от команд выше -> для сборки и развертывания после изменений:
-# СОБИРАЕМ И ПУШИМ ДЛЯ ВСЕХ СРАЗУ:
-
-log() {
-    local edited_string="***************** $1 *****************"
-    echo "" && echo "$edited_string" && echo ""
-}
-AMD_TAG="slezkin23/sportnotifier:amd64"
-ARM_TAG="slezkin23/sportnotifier:arm64"
-SPRING_PROFILE="vdsina"
-log "BUILD PROJECT" && ./gradlew clean build
-log "BUILD AMD" && docker build -t $AMD_TAG --build-arg SPRING_PROFILES_ACTIVE=$SPRING_PROFILE .
-log "PUSH FOR AMD" && docker push $AMD_TAG
-log "BUILD ARM" && docker buildx build --platform linux/arm64  -t $ARM_TAG --build-arg SPRING_PROFILES_ACTIVE=$SPRING_PROFILE .
-log "PUSH ARM" && docker push $ARM_TAG
-log "ALL BUILDING COMPLETE"
-
-
-# НА СЕРВАКЕ ПЕРЕУСТАНАВЛИВАЕМ:
-
-# for AMD
-echo && echo STOP: && docker stop sportnotifier
-echo && echo REMOVE_CONTAINER: && docker rm sportnotifier
-echo && echo REMOVE_IMAGE: && docker rmi slezkin23/sportnotifier:amd64
-echo && echo RUN: && docker run -it --name sportnotifier -p 8090:8090 -e SPRING_PROFILES_ACTIVE=h2,prod,vdsina -d --network sportnotifier_network --restart always slezkin23/sportnotifier:amd64
-echo && echo LOGS: && docker logs -f sportnotifier
-
-# for for ARM
-echo && echo STOP: && sudo docker stop sportnotifier
-echo && echo REMOVE_CONTAINER: && sudo docker rm sportnotifier
-echo && echo REMOVE_IMAGE: && sudo docker rmi slezkin23/sportnotifier:arm64
-echo && echo RUN: && sudo docker run -it --name sportnotifier -p 8090:8090 -e SPRING_PROFILES_ACTIVE=h2,prod,vdsina -d --network sportnotifier_network --restart always slezkin23/sportnotifier:arm64
-echo && echo LOGS: && sudo docker logs -f sportnotifier
-
-
+##################################################### ДОП. КОМАНДЫ #####################################################
 
 ### посмотреть images и containers:
 echo && echo IMAGES: && sudo docker images &&
