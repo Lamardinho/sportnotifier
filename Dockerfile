@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17.0.10_7-jdk
+FROM eclipse-temurin:17.0.11_9-jdk
 EXPOSE 8090
 WORKDIR /opt/app
 ARG SPRING_PROFILES_ACTIVE=prod

@@ -32,7 +32,7 @@ public class AppStartedLogInfo {
     public void printAppStarted() {
         val profiles = environment.getActiveProfiles();
         val profileList = Arrays.stream(profiles).collect(Collectors.toSet());
-        log.info("PROFILES: " + profileList);
+        log.info("PROFILES: {}", profileList);
 
         if (profileList.contains("vdsina")) {
             telegramMessageService.sendMessage(
