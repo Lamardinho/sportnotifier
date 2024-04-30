@@ -10,12 +10,12 @@ spring:
   h2:
     console.enabled: true
   jpa:
-    generate-ddl: true
+    generate-ddl: false
     open-in-view: false
     database-platform: org.hibernate.dialect.H2Dialect
     defer-datasource-initialization: true # set false if liquibase ON
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
       naming:
         physical-strategy: com.lamardinho.sportnotifier.config.H2IdentifierNamingStrategy
     properties:
