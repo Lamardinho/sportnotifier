@@ -4,6 +4,7 @@ import com.lamardinho.sportnotifier.service.AppUserDetailsService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -22,16 +23,33 @@ public class AppSecurityConfig {
     @NonNull
     private final AppUserDetailsService appUserDetailsService;
 
+    @Value("${app.remember-me-configurer-key}")
+    private String rememberMeConfigurerKey;
+
     @Bean
     public SecurityFilterChain filterChain(@NonNull HttpSecurity http) throws Exception {
+        val loginPostfixUrl = "/login";
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .anonymous(AbstractHttpConfigurer::disable)
+                .userDetailsService(appUserDetailsService)
                 .httpBasic(configurer -> {
                 })
+                .rememberMe(c -> c
+                        .key(rememberMeConfigurerKey)
+                        .tokenValiditySeconds(86400)
+                )
+                .formLogin(c -> c
+                        .loginPage(loginPostfixUrl)
+                        .defaultSuccessUrl("/", false)
+                        .permitAll()
+                )
+                .logout(c -> c
+                        .deleteCookies(rememberMeConfigurerKey)
+                        .logoutSuccessUrl(loginPostfixUrl)
+                        .permitAll()
+                )
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/deny").denyAll() // for my tests
-
                         .requestMatchers(
                                 "/actuator/env",
                                 "/h2-console/**"
@@ -40,7 +58,8 @@ public class AppSecurityConfig {
                         .requestMatchers(
                                 "/public/**",
                                 "/api/public/**",
-                                "/login",
+                                loginPostfixUrl,
+                                "/registration",
 
                                 // actuator:
                                 "/actuator",
@@ -50,9 +69,7 @@ public class AppSecurityConfig {
 
                         .anyRequest().authenticated()
                 )
-                .formLogin(configurer -> configurer
-                        .defaultSuccessUrl("/main.html", false))
-                .userDetailsService(appUserDetailsService)
+
                 .build();
     }
 

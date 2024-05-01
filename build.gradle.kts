@@ -50,6 +50,10 @@ dependencies {
     implementation("org.mapstruct:mapstruct:$mapstructVersion")
     //implementation("org.liquibase:liquibase-core:4.24.0")
     //runtimeOnly("org.postgresql:postgresql:42.7.3")      // https://mvnrepository.com/artifact/org.postgresql/postgresql
+    implementation("org.thymeleaf:thymeleaf:$thymeleafVersion")
+    implementation("org.thymeleaf:thymeleaf-spring5:$thymeleafVersion")
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion")
+
     runtimeOnly("com.h2database:h2:$h2Db")
 
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
