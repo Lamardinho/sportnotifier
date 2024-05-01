@@ -7,6 +7,7 @@ val openUiWebMvc = "2.5.0"
 val apacheCommonsCompress = "1.26.1"
 val h2Db = "2.2.224"
 val thymeleafVersion = "3.1.2.RELEASE"
+val mapstructVersion = "1.4.2.Final"
 
 plugins {
     java
@@ -46,11 +47,13 @@ dependencies {
     // Уже есть в какой то либе, но версия с уязвимостями. Указываем принудительно более новую:
     implementation("org.apache.commons:commons-compress:$apacheCommonsCompress")     // https://mvnrepository.com/artifact/org.apache.commons/commons-compress
     implementation("org.projectlombok:lombok:$lombokVersion")
+    implementation("org.mapstruct:mapstruct:$mapstructVersion")
     //implementation("org.liquibase:liquibase-core:4.24.0")
     //runtimeOnly("org.postgresql:postgresql:42.7.3")      // https://mvnrepository.com/artifact/org.postgresql/postgresql
     runtimeOnly("com.h2database:h2:$h2Db")
 
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
+    annotationProcessor("org.mapstruct:mapstruct-processor:$mapstructVersion")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")

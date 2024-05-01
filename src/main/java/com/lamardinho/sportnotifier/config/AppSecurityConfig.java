@@ -1,5 +1,6 @@
-package com.lamardinho.sportnotifier.config.security;
+package com.lamardinho.sportnotifier.config;
 
+import com.lamardinho.sportnotifier.service.AppUserDetailsService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
@@ -34,7 +35,7 @@ public class AppSecurityConfig {
                         .requestMatchers(
                                 "/actuator/env",
                                 "/h2-console/**"
-                        ).hasRole("APP_ADMIN")
+                        ).hasAuthority("APP_ADMIN")
 
                         .requestMatchers(
                                 "/public/**",
