@@ -83,8 +83,8 @@ management:
 
 app:
   remember-me:
-    configurer-key: ${REMEMBER_ME_CONFIGURER_KEY:sportnotifier_secret_key}
-    keep-in-db: ${keep_in_db:false}
+    configurer-key: ${REMEMBER_ME_CONFIGURER_KEY:sportnotifier_remember_me_configurer_key}
+    keep-in-db: ${REMEMBER_ME_KEEP_IN_DB:false}
   telegram:
     bot:
       token: ${TELEGRAM_BOT_TOKEN:secret}
