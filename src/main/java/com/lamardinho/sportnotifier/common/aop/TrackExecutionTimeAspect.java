@@ -19,7 +19,7 @@ public class TrackExecutionTimeAspect {
     public Object executionTime(@NonNull ProceedingJoinPoint point) throws Throwable {
         val startTime = currentTimeMillis();
         val object = point.proceed();
-        log.info(point.getSignature() + ". " + "Track execution time: " + (currentTimeMillis() - startTime) + "ms");
+        log.info("{}. Track execution time: {}ms", point.getSignature(), currentTimeMillis() - startTime);
         return object;
     }
 }

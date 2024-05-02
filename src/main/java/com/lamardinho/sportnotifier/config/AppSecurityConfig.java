@@ -1,8 +1,10 @@
-package com.lamardinho.sportnotifier.config.security;
+package com.lamardinho.sportnotifier.config;
 
+import com.lamardinho.sportnotifier.service.AppUserDetailsService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -12,6 +14,11 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
@@ -20,26 +27,52 @@ public class AppSecurityConfig {
 
     @NonNull
     private final AppUserDetailsService appUserDetailsService;
+    @NonNull
+    private final DataSource dataSource;
+
+    @Value("${app.remember-me.configurer-key}")
+    private String rememberMeConfigurerKey;
+
+    @Value("${app.remember-me.keep-in-db}")
+    private boolean rememberMeKeepInDb;
 
     @Bean
     public SecurityFilterChain filterChain(@NonNull HttpSecurity http) throws Exception {
+        val loginPostfixUrl = "/login";
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .anonymous(AbstractHttpConfigurer::disable)
+                .userDetailsService(appUserDetailsService)
                 .httpBasic(configurer -> {
                 })
+                .rememberMe(c -> c
+                        .key(rememberMeConfigurerKey)
+                        .alwaysRemember(true)
+                        .rememberMeCookieName("sportnotifier-remember-me")
+                        .tokenValiditySeconds(86400)
+                        .tokenRepository(persistentTokenRepository())
+                )
+                .formLogin(c -> c
+                        .loginPage(loginPostfixUrl)
+                        .defaultSuccessUrl("/", false)
+                        .permitAll()
+                )
+                .logout(c -> c
+                        .deleteCookies(rememberMeConfigurerKey)
+                        .logoutSuccessUrl(loginPostfixUrl)
+                        .permitAll()
+                )
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/deny").denyAll() // for my tests
-
                         .requestMatchers(
                                 "/actuator/env",
                                 "/h2-console/**"
-                        ).hasRole("APP_ADMIN")
+                        ).hasAuthority("APP_ADMIN")
 
                         .requestMatchers(
                                 "/public/**",
                                 "/api/public/**",
-                                "/login",
+                                loginPostfixUrl,
+                                "/registration",
 
                                 // actuator:
                                 "/actuator",
@@ -49,9 +82,7 @@ public class AppSecurityConfig {
 
                         .anyRequest().authenticated()
                 )
-                .formLogin(configurer -> configurer
-                        .defaultSuccessUrl("/main.html", false))
-                .userDetailsService(appUserDetailsService)
+
                 .build();
     }
 
@@ -66,5 +97,16 @@ public class AppSecurityConfig {
         authProvider.setUserDetailsService(appUserDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
+    }
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        if (rememberMeKeepInDb) {
+            val tokenRepository = new JdbcTokenRepositoryImpl();
+            tokenRepository.setDataSource(dataSource);
+            return tokenRepository;
+        } else {
+            return new InMemoryTokenRepositoryImpl();
+        }
     }
 }

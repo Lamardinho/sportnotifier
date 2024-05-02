@@ -39,7 +39,7 @@ class ActuatorTest {
     }
 
     @Test
-    @WithMockUser(username = "user", roles = "APP_ADMIN")
+    @WithMockUser(username = "user", authorities = "APP_ADMIN")
     void env_when_APP_ADMIN_then_ok() throws Exception {
         mockMvc.perform(
                         get(BASE_URL + "/env")
