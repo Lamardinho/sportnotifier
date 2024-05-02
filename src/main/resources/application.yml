@@ -82,7 +82,9 @@ management:
         include: info, health, env, metrics
 
 app:
-  remember-me-configurer-key: ${REMEMBER_ME_CONFIGURER_KEY:sportnotifier_secret_key}
+  remember-me:
+    configurer-key: ${REMEMBER_ME_CONFIGURER_KEY:sportnotifier_secret_key}
+    keep-in-db: ${keep_in_db:false}
   telegram:
     bot:
       token: ${TELEGRAM_BOT_TOKEN:secret}

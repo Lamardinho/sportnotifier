@@ -14,6 +14,11 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
@@ -22,9 +27,14 @@ public class AppSecurityConfig {
 
     @NonNull
     private final AppUserDetailsService appUserDetailsService;
+    @NonNull
+    private final DataSource dataSource;
 
-    @Value("${app.remember-me-configurer-key}")
+    @Value("${app.remember-me.configurer-key}")
     private String rememberMeConfigurerKey;
+
+    @Value("${app.remember-me.keep-in-db}")
+    private boolean rememberMeKeepInDb;
 
     @Bean
     public SecurityFilterChain filterChain(@NonNull HttpSecurity http) throws Exception {
@@ -37,7 +47,10 @@ public class AppSecurityConfig {
                 })
                 .rememberMe(c -> c
                         .key(rememberMeConfigurerKey)
+                        .alwaysRemember(true)
+                        .rememberMeCookieName("sportnotifier-remember-me")
                         .tokenValiditySeconds(86400)
+                        .tokenRepository(persistentTokenRepository())
                 )
                 .formLogin(c -> c
                         .loginPage(loginPostfixUrl)
@@ -84,5 +97,16 @@ public class AppSecurityConfig {
         authProvider.setUserDetailsService(appUserDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
+    }
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        if (rememberMeKeepInDb) {
+            val tokenRepository = new JdbcTokenRepositoryImpl();
+            tokenRepository.setDataSource(dataSource);
+            return tokenRepository;
+        } else {
+            return new InMemoryTokenRepositoryImpl();
+        }
     }
 }
