@@ -1,3 +1,6 @@
+server:
+  http2:
+    enabled: false
 #spring:
 #  thymeleaf:
 #    cache: false

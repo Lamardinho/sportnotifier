@@ -48,7 +48,7 @@ public class AppSecurityConfig {
                 .rememberMe(c -> c
                         .key(rememberMeConfigurerKey)
                         .alwaysRemember(true)
-                        .rememberMeCookieName("sportnotifier-remember-me")
+                        .rememberMeCookieName(rememberMeConfigurerKey)
                         .tokenValiditySeconds(86400)
                         .tokenRepository(persistentTokenRepository())
                 )
