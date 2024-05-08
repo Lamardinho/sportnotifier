@@ -6,6 +6,7 @@ import lombok.val;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import static java.lang.System.currentTimeMillis;
@@ -19,7 +20,20 @@ public class TrackExecutionTimeAspect {
     public Object executionTime(@NonNull ProceedingJoinPoint point) throws Throwable {
         val startTime = currentTimeMillis();
         val object = point.proceed();
-        log.info("{}. Track execution time: {}ms", point.getSignature(), currentTimeMillis() - startTime);
+        log.info(
+                "{}. Track execution time: {}ms. By: {}",
+                point.getSignature(),
+                (currentTimeMillis() - startTime),
+                getUserName()
+        );
         return object;
+    }
+
+    private String getUserName() {
+        val securityContext = SecurityContextHolder.getContext();
+        if (securityContext == null || securityContext.getAuthentication() == null) {
+            return "application";
+        }
+        return securityContext.getAuthentication().getName();
     }
 }
