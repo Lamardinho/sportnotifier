@@ -1,6 +1,7 @@
 package com.lamardinho.sportnotifier.config;
 
 import com.lamardinho.sportnotifier.SportnotifierApplication;
+import com.lamardinho.sportnotifier.config.util.AppProfile;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -16,7 +17,7 @@ import java.lang.annotation.Target;
                 SportnotifierApplication.class
         }
 )
-@ActiveProfiles("test")
+@ActiveProfiles(AppProfile.TEST)
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Transactional
