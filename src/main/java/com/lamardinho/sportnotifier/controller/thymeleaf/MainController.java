@@ -20,4 +20,9 @@ public class MainController {
     public String registrationPage() {
         return "registration";
     }
+
+    @GetMapping("/decode-token")
+    public String decodeToken() {
+        return "decode-token";
+    }
 }
