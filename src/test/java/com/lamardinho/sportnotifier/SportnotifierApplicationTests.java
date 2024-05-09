@@ -1,5 +1,6 @@
 package com.lamardinho.sportnotifier;
 
+import com.lamardinho.sportnotifier.config.util.AppProfile;
 import lombok.extern.log4j.Log4j2;
 import lombok.val;
 import org.junit.jupiter.api.Test;
@@ -30,6 +31,6 @@ class SportnotifierApplicationTests {
         val profileList = Arrays.stream(profiles).collect(Collectors.toSet());
 
         assertThat(profileList)
-                .isEqualTo(Set.of("test"));
+                .isEqualTo(Set.of(AppProfile.TEST));
     }
 }
