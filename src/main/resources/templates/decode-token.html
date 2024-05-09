@@ -1,0 +1,51 @@
+<!-- decode-token.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decode Token</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<!-- navbar -->
+<div th:replace="~{fragments/navbar::navbar}"></div>
+
+<!-- content -->
+<div class="container mt-4">
+    <h1>Decode Token</h1>
+    <form id="decodeTokenForm" th:action="@{/api/decode-token}" method="get">
+        <div class="form-group">
+            <label for="tokenInput">Token:</label>
+            <input type="text" class="form-control" id="tokenInput" name="token">
+        </div>
+        <button type="submit" class="btn btn-primary">Decode</button>
+    </form>
+    <div id="decodedTokenResult"></div>
+</div>
+
+<!-- Подключаем скрипты Bootstrap для взаимодействия с элементами интерфейса -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Decode Token Script -->
+<script th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('decodeTokenForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const token = document.getElementById('tokenInput').value;
+            fetch(this.getAttribute('action') + '?token=' + token)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('decodedTokenResult').innerHTML = JSON.stringify(data);
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    });
+</script>
+
+
+</body>
+</html>
