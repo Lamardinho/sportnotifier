@@ -43,7 +43,7 @@ spring:
     init:
       mode: never  # WARN в дефолтном профиле не включаем!!!
   thymeleaf:
-    cache: false
+    cache: true
     mode: HTML
     encoding: UTF-8
     #  mail:
