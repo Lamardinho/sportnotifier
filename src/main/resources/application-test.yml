@@ -1,28 +1,33 @@
-#spring:
-#  datasource:
-#    driver-class-name: org.h2.Driver
-#    username: sa
-#    password:
-#    url: jdbc:h2:mem:~/sportnotifier_test_db;MODE=postgresql;DB_CLOSE_DELAY=-1
-#  jpa:
-#    database-platform: "org.hibernate.dialect.H2Dialect"
-#    #database-platform: org.hibernate.dialect.PostgreSQLDialect
-#    generate-ddl: true
-#    hibernate:
-#      ddl-auto: create
-#      naming:
-#        physical-strategy: com.lamardinho.sportnotifier.config.H2IdentifierNamingStrategy
-#    properties:
-#      hibernate:
-#        dialect: org.hibernate.dialect.PostgreSQLDialect
-#        show_sql: true
-#        use_sql_comments: true
-#        format_sql: true
-#        globally-quoted-identifiers: true
-#  liquibase:
-#    enabled: off # WARN !!! if liquibase "on" -> defer-datasource-initialization: false else defer-datasource-initialization: true
-#  sql:
-#    init:
-#      data-locations:
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    username: user_example
+    password: password_example
+    url: jdbc:h2:mem:~/sportnotifier_h2_test_db;MODE=PostgreSQL;DATABASE_TO_UPPER=false;DB_CLOSE_DELAY=-1;
+    tomcat:
+      connection-properties: useUnicode=true;characterEncoding=utf-8
+  jpa:
+    generate-ddl: false
+    open-in-view: false
+    show-sql: false
+    database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: create
+      naming:
+        physical-strategy: com.lamardinho.sportnotifier.config.H2IdentifierNamingStrategy
+    properties:
+      hibernate:
+        show_sql: false
+        use_sql_comments: false
+        format_sql: false
+        globally-quoted-identifiers: true
+  liquibase:
+    enabled: false
+  sql:
+    init:
+      mode: always
+      data-locations:
+        - classpath:sql/1.sql
 
 debug: true

@@ -14,9 +14,9 @@ spring:
       max-request-size: 50MB
   datasource:
     driver-class-name: org.h2.Driver
-    username: sa
-    password:
-    url: jdbc:h2:mem:~/sportnotifier;DATABASE_TO_UPPER=false;DB_CLOSE_DELAY=-1
+    username: user_example
+    password: password_example
+    url: jdbc:h2:mem:~/sportnotifier_h2;DATABASE_TO_UPPER=false;DB_CLOSE_DELAY=-1;
     #url: jdbc:h2:file:/tmp/db/sportnotifier;AUTO_SERVER=TRUE;DATABASE_TO_UPPER=false;DB_CLOSE_DELAY=-1;
     tomcat:
       connection-properties: useUnicode=true;characterEncoding=utf-8
@@ -26,7 +26,7 @@ spring:
     generate-ddl: false
     open-in-view: false
     database-platform: org.hibernate.dialect.H2Dialect
-    defer-datasource-initialization: true
+    defer-datasource-initialization: true # set false if liquibase ON
     hibernate:
       ddl-auto: none
       naming:
@@ -37,15 +37,13 @@ spring:
         use_sql_comments: false
         format_sql: false
         globally-quoted-identifiers: true
-        #  liquibase:
-        #    enabled: off # WARN !!! if liquibase "on" -> defer-datasource-initialization: false else defer-datasource-initialization: true
+  liquibase:
+    enabled: off # WARN !!! if liquibase "on" -> defer-datasource-initialization: false else defer-datasource-initialization: true
   sql:
     init:
-      mode: never
-    #data-locations:
-    # WARN в дефолтном профиле не включаем!!!
+      mode: never  # WARN в дефолтном профиле не включаем!!!
   thymeleaf:
-    cache: false
+    cache: true
     mode: HTML
     encoding: UTF-8
     #  mail:
@@ -85,15 +83,15 @@ management:
 
 app:
   remember-me:
-    configurer-key: ${REMEMBER_ME_CONFIGURER_KEY:sportnotifier_remember_me_configurer_key}
+    configurer-key: ${REMEMBER_ME_CONFIGURER_KEY:sportnotifier_remember_me_configurer_key_example}
     keep-in-db: ${REMEMBER_ME_KEEP_IN_DB:false}
   telegram:
     bot:
-      token: ${TELEGRAM_BOT_TOKEN:secret}
+      token: ${TELEGRAM_BOT_TOKEN:secret_example}
       send-msg-post-url-template: ${TELEGRAM_SEND-MSG-POST-URL-TEMPLATE:https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s}
     chat-id:
       owner: ${OWNER_CHAT_ID:1}
   football-data-org:
-    token: ${FOOTBALL_DATA_ORG_TOKEN:secret}
+    token: ${FOOTBALL_DATA_ORG_TOKEN:secret_example}
     scheduler:
       conditional: ${FOOTBALL_DATA_ORG_SCHEDULER_CONDITIONAL:false}

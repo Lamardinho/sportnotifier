@@ -18,6 +18,9 @@ spring:
         use_sql_comments: false
         format_sql: false
         globally-quoted-identifiers: true
+  sql:
+    init:
+      mode: never
   liquibase:
     enabled: on # WARN !!! if liquibase "on" -> defer-datasource-initialization: false else defer-datasource-initialization: true
     change-log: db/changelog/db-master.xml
