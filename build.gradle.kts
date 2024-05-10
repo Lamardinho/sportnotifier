@@ -19,6 +19,8 @@ val h2DbVersion = "2.2.224"
 // https://mvnrepository.com/artifact/org.postgresql/postgresql
 val postgresqlVersion = "42.7.3"
 
+val liquibaseVersion = "4.24.0"
+
 val thymeleafVersion = "3.1.2.RELEASE"
 
 val mapstructVersion = "1.4.2.Final"
@@ -62,7 +64,7 @@ dependencies {
     implementation("org.apache.commons:commons-compress:$apacheCommonsCompressVersion")
     implementation("org.projectlombok:lombok:$lombokVersion")
     implementation("org.mapstruct:mapstruct:$mapstructVersion")
-    //implementation("org.liquibase:liquibase-core:4.24.0")
+    implementation("org.liquibase:liquibase-core:$liquibaseVersion")
     implementation("org.thymeleaf:thymeleaf:$thymeleafVersion")
     implementation("org.thymeleaf:thymeleaf-spring5:$thymeleafVersion")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion")
