@@ -12,9 +12,7 @@ public class MainController {
 
     @GetMapping("/")
     public String mainPage(@NonNull Model model, @NonNull Principal principal) {
-        model.addAttribute("username", principal.getName());
-        model.addAttribute("avatarPath", "/images/default_avatar.jpeg");
-
+        setDefaultModelAttributes(model, principal);
         return "main";
     }
 
@@ -29,7 +27,15 @@ public class MainController {
     }
 
     @GetMapping("/decode-token")
-    public String decodeToken() {
+    public String decodeToken(@NonNull Model model, @NonNull Principal principal) {
+        setDefaultModelAttributes(model, principal);
         return "decode-token";
+    }
+
+    private void setDefaultModelAttributes(@NonNull Model model, @NonNull Principal principal) {
+        if (principal.getName() != null) {
+            model.addAttribute("username", principal.getName());
+            model.addAttribute("avatarPath", "/images/default_avatar.jpeg");
+        }
     }
 }
