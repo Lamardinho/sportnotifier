@@ -1,5 +1,6 @@
 <!-- navbar.html -->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
 <div th:fragment="navbar">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -21,14 +22,21 @@
                     <a class="nav-link" href="/actuator" target="_blank">Actuator</a>
                 </li>
             </ul>
+            <!-- Выводим аватар пользователя -->
+            <img th:src="${avatarPath}" alt="Avatar" class="avatar mr-2 rounded-circle"
+                 style="max-width: 40px; max-height: 40px;">
+            <!-- Выводим имя пользователя -->
             <span class="navbar-text mr-2" th:text="${username}"></span>
+            <!-- Logout -->
             <button class="btn btn-outline-dark my-2 my-sm-0" type="button" onclick="logout()">Logout</button>
         </div>
     </nav>
-
-    <script>
-        function logout() {
-            window.location.href = '/logout';
-        }
-    </script>
 </div>
+
+<script>
+    function logout() {
+        window.location.href = '/logout';
+    }
+</script>
+</body>
+</html>

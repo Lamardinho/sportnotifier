@@ -13,6 +13,8 @@ public class MainController {
     @GetMapping("/")
     public String mainPage(@NonNull Model model, @NonNull Principal principal) {
         model.addAttribute("username", principal.getName());
+        model.addAttribute("avatarPath", "/images/default_avatar.jpeg");
+
         return "main";
     }
 
