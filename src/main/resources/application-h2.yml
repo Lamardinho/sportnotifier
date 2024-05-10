@@ -24,6 +24,8 @@ spring:
         use_sql_comments: false
         format_sql: false
         globally-quoted-identifiers: true
+  liquibase:
+    enabled: false
 
   sql:
     init:
