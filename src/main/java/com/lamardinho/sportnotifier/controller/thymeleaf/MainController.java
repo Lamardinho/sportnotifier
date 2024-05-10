@@ -26,6 +26,11 @@ public class MainController {
         return "registration";
     }
 
+    @GetMapping("/change-password")
+    public String changePassword() {
+        return "change-password";
+    }
+
     @GetMapping("/decode-token")
     public String decodeToken() {
         return "decode-token";
