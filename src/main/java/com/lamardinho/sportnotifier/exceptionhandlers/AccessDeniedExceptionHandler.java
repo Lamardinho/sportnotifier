@@ -1,4 +1,4 @@
-package com.lamardinho.sportnotifier.config.exceptionhandlers;
+package com.lamardinho.sportnotifier.exceptionhandlers;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;

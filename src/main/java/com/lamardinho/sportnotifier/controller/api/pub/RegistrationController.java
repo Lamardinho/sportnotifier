@@ -1,7 +1,7 @@
 package com.lamardinho.sportnotifier.controller.api.pub;
 
 import com.lamardinho.sportnotifier.dto.RegistrationDTO;
-import com.lamardinho.sportnotifier.service.RegistrationService;
+import com.lamardinho.sportnotifier.service.registration.RegistrationService;
 import jakarta.validation.Valid;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

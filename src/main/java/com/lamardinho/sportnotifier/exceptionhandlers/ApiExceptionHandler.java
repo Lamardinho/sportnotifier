@@ -1,4 +1,4 @@
-package com.lamardinho.sportnotifier.config.exceptionhandlers;
+package com.lamardinho.sportnotifier.exceptionhandlers;
 
 import com.lamardinho.sportnotifier.common.AppException;
 import jakarta.persistence.EntityNotFoundException;

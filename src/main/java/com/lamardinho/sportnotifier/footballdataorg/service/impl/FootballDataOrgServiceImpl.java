@@ -1,11 +1,12 @@
 package com.lamardinho.sportnotifier.footballdataorg.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lamardinho.sportnotifier.config.util.AppProfile;
 import com.lamardinho.sportnotifier.footballdataorg.dto.FootballApiDTO;
 import com.lamardinho.sportnotifier.footballdataorg.dto.MatchDTO;
 import com.lamardinho.sportnotifier.footballdataorg.service.FootballDataOrgService;
-import com.lamardinho.sportnotifier.messages.dto.TelegramSendMessageDTO;
-import com.lamardinho.sportnotifier.messages.service.TelegramMessageService;
+import com.lamardinho.sportnotifier.messages.telegram.TelegramMessageService;
+import com.lamardinho.sportnotifier.messages.telegram.dto.TelegramSendMessageDTO;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -27,7 +28,7 @@ import static java.lang.String.format;
 @Service
 @RequiredArgsConstructor
 @Log4j2
-@Profile({"prod", "vdsina"})
+@Profile({AppProfile.PROD})
 public class FootballDataOrgServiceImpl implements FootballDataOrgService {
 
     @NonNull
@@ -38,7 +39,9 @@ public class FootballDataOrgServiceImpl implements FootballDataOrgService {
     private final TelegramMessageService telegramMessageService;
 
     @Value("${app.football-data-org.token}")
-    private String token;
+    private String footballApiToken;
+    @Value("${app.telegram.bot.sportnotifier.token}")
+    private String botToken;
 
     @Override
     public void checkAndNotifiesChampionsLeagueMatchesByDates(
@@ -53,7 +56,7 @@ public class FootballDataOrgServiceImpl implements FootballDataOrgService {
         } else {
             val msg = createMatchesString(matches, dateFrom, dateTo);
             log.info(msg);
-            telegramMessageService.sendMessage(new TelegramSendMessageDTO(chatID, msg));
+            telegramMessageService.sendMessage(new TelegramSendMessageDTO(chatID, msg), botToken);
         }
     }
 
@@ -70,7 +73,7 @@ public class FootballDataOrgServiceImpl implements FootballDataOrgService {
         );
 
         val headers = new HttpHeaders();
-        headers.set("X-Auth-Token", token);
+        headers.set("X-Auth-Token", footballApiToken);
         val entity = new HttpEntity<>(headers);
 
         val response = restTemplate.exchange(

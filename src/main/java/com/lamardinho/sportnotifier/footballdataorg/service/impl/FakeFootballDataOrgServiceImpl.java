@@ -1,5 +1,6 @@
 package com.lamardinho.sportnotifier.footballdataorg.service.impl;
 
+import com.lamardinho.sportnotifier.config.util.AppProfile;
 import com.lamardinho.sportnotifier.footballdataorg.dto.FootballApiDTO;
 import com.lamardinho.sportnotifier.footballdataorg.service.FootballDataOrgService;
 import lombok.NonNull;
@@ -13,7 +14,7 @@ import java.time.LocalDate;
 @Service
 @RequiredArgsConstructor
 @Log4j2
-@Profile({"default", "local", "test"})
+@Profile({AppProfile.DEFAULT, AppProfile.LOCAL, AppProfile.TEST})
 public class FakeFootballDataOrgServiceImpl implements FootballDataOrgService {
 
     @Override

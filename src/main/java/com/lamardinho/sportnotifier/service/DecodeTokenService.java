@@ -1,4 +1,4 @@
-package com.lamardinho.sportnotifier.common.service;
+package com.lamardinho.sportnotifier.service;
 
 import lombok.NonNull;
 import lombok.val;
