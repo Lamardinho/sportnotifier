@@ -86,12 +86,13 @@ app:
     configurer-key: ${REMEMBER_ME_CONFIGURER_KEY:sportnotifier_remember_me_configurer_key_example}
     keep-in-db: ${REMEMBER_ME_KEEP_IN_DB:false}
   telegram:
+    send-msg-post-url-template: https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s
     bot:
-      token: ${TELEGRAM_BOT_TOKEN:secret_example}
-      send-msg-post-url-template: ${TELEGRAM_SEND-MSG-POST-URL-TEMPLATE:https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s}
+      just_project_bot:
+        token: ${JUST_PROJECT_BOT_TOKEN:just_project_bot_token_example}
+      sportnotifier:
+        token: ${SPORTNOTIFIER_BOT_TOKEN:sportnotifier_bot_token_example}
     chat-id:
       owner: ${OWNER_CHAT_ID:1}
   football-data-org:
     token: ${FOOTBALL_DATA_ORG_TOKEN:secret_example}
-    scheduler:
-      conditional: ${FOOTBALL_DATA_ORG_SCHEDULER_CONDITIONAL:false}

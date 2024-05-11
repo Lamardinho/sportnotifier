@@ -1,7 +1,7 @@
 package com.lamardinho.sportnotifier.common;
 
-import com.lamardinho.sportnotifier.messages.dto.TelegramSendMessageDTO;
-import com.lamardinho.sportnotifier.messages.service.TelegramMessageService;
+import com.lamardinho.sportnotifier.messages.telegram.TelegramMessageService;
+import com.lamardinho.sportnotifier.messages.telegram.dto.TelegramSendMessageDTO;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -27,6 +27,8 @@ public class AppStartedLogInfo {
 
     @Value("${app.telegram.chat-id.owner}")
     private String ownerChatID;
+    @Value("${app.telegram.bot.sportnotifier.token}")
+    private String botToken;
 
     @EventListener(ApplicationReadyEvent.class)
     public void printAppStarted() {
@@ -34,11 +36,10 @@ public class AppStartedLogInfo {
         val profileList = Arrays.stream(profiles).collect(Collectors.toSet());
         log.info("PROFILES: {}", profileList);
 
-        if (profileList.contains("vdsina")) {
-            telegramMessageService.sendMessage(
-                    new TelegramSendMessageDTO(ownerChatID, "sportnotifier started")
-            );
-        }
+        telegramMessageService.sendMessage(
+                new TelegramSendMessageDTO(ownerChatID, "sportnotifier started"),
+                botToken
+        );
 
         val str = """
                                                                                \s

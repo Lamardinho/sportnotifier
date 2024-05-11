@@ -3,7 +3,7 @@ package com.lamardinho.sportnotifier.footballdataorg.service.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lamardinho.sportnotifier.footballdataorg.dto.MatchDTO;
 import com.lamardinho.sportnotifier.footballdataorg.dto.TeamDTO;
-import com.lamardinho.sportnotifier.messages.service.impl.TelegramMessageServiceImpl;
+import com.lamardinho.sportnotifier.messages.telegram.impl.TelegramMessageServiceImpl;
 import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.client.RestTemplate;
@@ -45,14 +45,16 @@ class FootballDataOrgServiceTest {
 
         System.out.println("\n" + result);
         assertThat(result).isEqualTo(
-                "Расписание матчей лиги чемпионов за период (2023-10-03 - 2023-10-05):\n" +
-                        "\n" +
-                        "Real Madrid vs Manchester United (время: 2023-10-03T16:45:00Z)\n" +
-                        "\n" +
-                        "Barcelona vs Chelsea (время: 2023-10-03T18:45:00Z)\n" +
-                        "\n" +
-                        "PSG vs Manchester City (время: 2023-10-03T19:45:00Z)\n" +
-                        "\n"
+                """
+                        Расписание матчей лиги чемпионов за период (2023-10-03 - 2023-10-05):
+
+                        Real Madrid vs Manchester United (время: 2023-10-03T16:45:00Z)
+
+                        Barcelona vs Chelsea (время: 2023-10-03T18:45:00Z)
+
+                        PSG vs Manchester City (время: 2023-10-03T19:45:00Z)
+
+                        """
         );
     }
 }

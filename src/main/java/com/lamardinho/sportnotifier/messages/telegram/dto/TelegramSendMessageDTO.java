@@ -1,4 +1,4 @@
-package com.lamardinho.sportnotifier.messages.dto;
+package com.lamardinho.sportnotifier.messages.telegram.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;

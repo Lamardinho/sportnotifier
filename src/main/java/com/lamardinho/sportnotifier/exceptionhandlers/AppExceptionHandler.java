@@ -1,4 +1,4 @@
-package com.lamardinho.sportnotifier.common.exceptionhandlers;
+package com.lamardinho.sportnotifier.exceptionhandlers;
 
 import com.lamardinho.sportnotifier.common.AppMsgErrors;
 import com.lamardinho.sportnotifier.common.ContractResult;

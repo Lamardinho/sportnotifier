@@ -25,6 +25,9 @@ val thymeleafVersion = "3.1.2.RELEASE"
 
 val mapstructVersion = "1.4.2.Final"
 
+// https://mvnrepository.com/artifact/org.telegram/telegrambots
+val telegramBotVersion = "6.9.7.1"
+
 plugins {
     java
     id("org.springframework.boot") version "3.2.4"
@@ -68,6 +71,7 @@ dependencies {
     implementation("org.thymeleaf:thymeleaf:$thymeleafVersion")
     implementation("org.thymeleaf:thymeleaf-spring5:$thymeleafVersion")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion")
+    implementation("org.telegram:telegrambots:$telegramBotVersion")
 
     runtimeOnly("org.postgresql:postgresql:$postgresqlVersion")
     runtimeOnly("com.h2database:h2:$h2DbVersion")

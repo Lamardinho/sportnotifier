@@ -1,8 +1,8 @@
-package com.lamardinho.sportnotifier.service.impl;
+package com.lamardinho.sportnotifier.service.registration.impl;
 
 import com.lamardinho.sportnotifier.config.util.AppProfile;
 import com.lamardinho.sportnotifier.dto.RegistrationDTO;
-import com.lamardinho.sportnotifier.service.RegistrationService;
+import com.lamardinho.sportnotifier.service.registration.RegistrationService;
 import lombok.NonNull;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;

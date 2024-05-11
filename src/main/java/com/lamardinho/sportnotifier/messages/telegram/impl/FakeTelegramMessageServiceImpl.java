@@ -1,7 +1,7 @@
-package com.lamardinho.sportnotifier.messages.service.impl;
+package com.lamardinho.sportnotifier.messages.telegram.impl;
 
-import com.lamardinho.sportnotifier.messages.dto.TelegramSendMessageDTO;
-import com.lamardinho.sportnotifier.messages.service.TelegramMessageService;
+import com.lamardinho.sportnotifier.messages.telegram.dto.TelegramSendMessageDTO;
+import com.lamardinho.sportnotifier.messages.telegram.TelegramMessageService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -17,7 +17,7 @@ import org.springframework.validation.annotation.Validated;
 public class FakeTelegramMessageServiceImpl implements TelegramMessageService {
 
     @Override
-    public void sendMessage(@NonNull TelegramSendMessageDTO dto) {
-        log.info(dto.getText());
+    public void sendMessage(@NonNull TelegramSendMessageDTO dto, @NonNull String botToken) {
+        log.info(dto.getText(), botToken);
     }
 }
