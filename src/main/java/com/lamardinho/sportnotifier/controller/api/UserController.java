@@ -1,4 +1,4 @@
-package com.lamardinho.sportnotifier.controller;
+package com.lamardinho.sportnotifier.controller.api;
 
 import com.lamardinho.sportnotifier.common.aop.TrackExecutionTime;
 import com.lamardinho.sportnotifier.dto.ChangePasswordDTO;

@@ -25,3 +25,9 @@ file: run_to_docker_arm64.sh
 ### посмотреть images и containers:
 echo && echo IMAGES: && sudo docker images &&
 echo && echo CONTAINERS: && sudo docker ps -a
+
+#запускаем контейнер:
+# локально:
+docker run -it --name sportnotifier -p 8090:8090 --env-file Dockerfile_envs.env -d slezkin23/sportnotifier
+# для удаленного сервера:
+docker run -it --name sportnotifier -p 8090:8090 --env-file Dockerfile_envs.env -e SPRING_PROFILES_ACTIVE=prod,ssl -d slezkin23/sportnotifier

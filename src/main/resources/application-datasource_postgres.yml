@@ -3,7 +3,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     username: ${DB_USER:postgres}
     password: ${DB_PASSWORD:postgres}
-    url: jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5442}/${DATABASE_NAME:sportnotifier}?currentSchema=public&useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5432}/${DATABASE_NAME:sportnotifier}?currentSchema=public&useUnicode=true&characterEncoding=UTF-8
   jpa:
     database-platform: "org.hibernate.dialect.PostgreSQLDialect"
     defer-datasource-initialization: false

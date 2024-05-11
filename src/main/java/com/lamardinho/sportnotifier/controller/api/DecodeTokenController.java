@@ -1,7 +1,7 @@
-package com.lamardinho.sportnotifier.common.controller.api;
+package com.lamardinho.sportnotifier.controller.api;
 
 import com.lamardinho.sportnotifier.common.aop.TrackExecutionTime;
-import com.lamardinho.sportnotifier.common.service.DecodeTokenService;
+import com.lamardinho.sportnotifier.service.DecodeTokenService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

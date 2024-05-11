@@ -1,4 +1,4 @@
-package com.lamardinho.sportnotifier.service;
+package com.lamardinho.sportnotifier.service.registration;
 
 import com.lamardinho.sportnotifier.dto.RegistrationDTO;
 import lombok.NonNull;
