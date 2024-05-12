@@ -1,8 +1,8 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    username: ${DB_USER:postgres}
-    password: ${DB_PASSWORD:postgres}
+    username: ${DB_USER:user_example}
+    password: ${DB_PASSWORD:password_example}
     url: jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5432}/${DATABASE_NAME:sportnotifier}?currentSchema=public&useUnicode=true&characterEncoding=UTF-8
   jpa:
     database-platform: "org.hibernate.dialect.PostgreSQLDialect"

@@ -6,15 +6,17 @@
     <preConditions>
         <dbms type="postgresql"/>
     </preConditions>
-    <!-- ************************************  RUN  ***************************************************** -->
-    <changeSet id="2024_04_16_test_liquibase_table_create.sql" author="lamardinho">
+    <!-- ************************************  RUN  ************************************ -->
+    <changeSet id="user_tables_create.sql" author="lamardinho">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="test_liquibase_table"/>
             </not>
         </preConditions>
-        <sqlFile path="changesets/2024_04_16_test_liquibase_table_create.sql" relativeToChangelogFile="true"/>
+        <sqlFile path="changesets/2024_05_11__01_user_tables_create.sql" relativeToChangelogFile="true"/>
     </changeSet>
 
-    <include file="changesets/2024_04_17_test_liquibase_table_inserts.sql" relativeToChangelogFile="true"/>
+    <include file="changesets/2024_05_11__02_subscription_to_notifications_create_and_inserts.sql"
+             relativeToChangelogFile="true"/>
+    <include file="changesets/2024_05_12__01_telegram_subscriber_create.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>

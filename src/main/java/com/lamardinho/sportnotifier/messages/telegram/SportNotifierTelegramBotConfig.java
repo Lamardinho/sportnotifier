@@ -1,6 +1,7 @@
 package com.lamardinho.sportnotifier.messages.telegram;
 
 import com.lamardinho.sportnotifier.config.util.AppProfile;
+import lombok.NonNull;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -18,9 +19,16 @@ public class SportNotifierTelegramBotConfig {
     private String myBotToken;
 
     @Bean
-    TelegramBotsApi telegramBotsApi() throws TelegramApiException {
+    TelegramBotsApi telegramBotsApi(
+            @NonNull TelegramSubscriberService telegramSubscriberService
+    ) throws TelegramApiException {
         val botsApi = new TelegramBotsApi(DefaultBotSession.class);
-        botsApi.registerBot(new SportNotifierTelegramBot(myBotToken));
+        botsApi.registerBot(
+                new SportNotifierTelegramBot(
+                        myBotToken,
+                        telegramSubscriberService
+                )
+        );
 
         return botsApi;
     }
