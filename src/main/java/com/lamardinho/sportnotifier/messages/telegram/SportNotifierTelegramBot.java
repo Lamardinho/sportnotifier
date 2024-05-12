@@ -56,6 +56,12 @@ public class SportNotifierTelegramBot extends TelegramLongPollingBot {
                                 .setFirstName(chat.getFirstName())
                                 .setLastName(chat.getLastName());
                 telegramSubscriberService.saveNewOrUpdateToActive(dto);
+                log.info(
+                        "subscriber with {} was registered in the '{}'.",
+                        (chat.getUserName() == null)
+                                ? ("chatId: '" + chatId + "'") : ("user_name: '" + chat.getUserName() + "'"),
+                        getBotUsername()
+                );
 
                 sendMessage(chatId, msg);
 
@@ -96,11 +102,11 @@ public class SportNotifierTelegramBot extends TelegramLongPollingBot {
     }
 
     private void subscribeToNotificationList(Long chatId) {
-        log.info(chatId);
+        log.info("subscribeToNotificationList: {}", chatId);
     }
 
     private void unsubscribeToNotificationList(Long chatId) {
-        log.info(chatId);
+        log.info("unsubscribeToNotificationList: {}", chatId);
     }
 
     private static final String START = "/start";
