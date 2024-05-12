@@ -3,8 +3,8 @@ spring:
     driver-class-name: org.h2.Driver
     username: user
     password: user
-    #url: jdbc:h2:mem:~/sportnotifier;DATABASE_TO_UPPER=false;DB_CLOSE_DELAY=-1
-    url: jdbc:h2:file:/tmp/db/sportnotifier;MODE=PostgreSQL;AUTO_SERVER=TRUE;DATABASE_TO_UPPER=false;DB_CLOSE_DELAY=-1;
+    url: jdbc:h2:mem:~/sportnotifier_test_db;DATABASE_TO_UPPER=false;DB_CLOSE_DELAY=-1
+    #url: jdbc:h2:file:/tmp/db/sportnotifier;MODE=PostgreSQL;AUTO_SERVER=TRUE;DATABASE_TO_UPPER=false;DB_CLOSE_DELAY=-1;
     tomcat:
       connection-properties: useUnicode=true;characterEncoding=utf-8
   h2:
