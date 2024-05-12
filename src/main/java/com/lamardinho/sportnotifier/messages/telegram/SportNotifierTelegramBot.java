@@ -1,6 +1,7 @@
 package com.lamardinho.sportnotifier.messages.telegram;
 
 import com.lamardinho.sportnotifier.common.AppException;
+import com.lamardinho.sportnotifier.messages.telegram.dto.TelegramSubscriberCreateDto;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import lombok.val;
@@ -13,11 +14,18 @@ import static java.lang.String.format;
 @Log4j2
 public class SportNotifierTelegramBot extends TelegramLongPollingBot {
 
+    @NonNull
+    private final TelegramSubscriberService telegramSubscriberService;
+
     /**
      * @param botToken - bot token for registration.
      */
-    public SportNotifierTelegramBot(@NonNull String botToken) {
+    public SportNotifierTelegramBot(
+            @NonNull String botToken,
+            @NonNull TelegramSubscriberService telegramSubscriberService
+    ) {
         super(botToken);
+        this.telegramSubscriberService = telegramSubscriberService;
     }
 
     @Override
@@ -28,7 +36,7 @@ public class SportNotifierTelegramBot extends TelegramLongPollingBot {
             val chat = message.getChat();
             val chatId = message.getChatId();
 
-            if (text.equalsIgnoreCase("/start")) {
+            if (text.equalsIgnoreCase(START)) {
                 val msg = format(
                         """
                                 Hello @%s. Welcome to us!
@@ -41,14 +49,22 @@ public class SportNotifierTelegramBot extends TelegramLongPollingBot {
                         )
                 );
 
+                val dto =
+                        new TelegramSubscriberCreateDto()
+                                .setChatId(chatId)
+                                .setUserName(chat.getUserName())
+                                .setFirstName(chat.getFirstName())
+                                .setLastName(chat.getLastName());
+                telegramSubscriberService.saveNewOrUpdateToActive(dto);
+
                 sendMessage(chatId, msg);
 
             } else if (text.equalsIgnoreCase(SportNotifierTelegramBotCommands.UEFA_CH_L_MATCHES_NOTIFICATIONS_SUBSCRIBE.getCommandValue())) {
-                subscribeToMailingList(chatId);
+                subscribeToNotificationList(chatId);
                 sendMessage(chatId, SUBSCRIPTION_COMPLETED_SUCCESSFULLY);
 
             } else if (text.equalsIgnoreCase(SportNotifierTelegramBotCommands.UEFA_CH_L_MATCHES_NOTIFICATIONS_UNSUBSCRIBE.getCommandValue())) {
-                unsubscribeToMailingList(chatId);
+                unsubscribeToNotificationList(chatId);
                 sendMessage(chatId, SUBSCRIPTION_CANCELED_SUCCESSFULLY);
 
             } else {
@@ -79,14 +95,15 @@ public class SportNotifierTelegramBot extends TelegramLongPollingBot {
         return "sportnotifier_bot";
     }
 
-    private void subscribeToMailingList(Long chatId) {
+    private void subscribeToNotificationList(Long chatId) {
         log.info(chatId);
     }
 
-    private void unsubscribeToMailingList(Long chatId) {
+    private void unsubscribeToNotificationList(Long chatId) {
         log.info(chatId);
     }
 
+    private static final String START = "/start";
     private static final String SUBSCRIPTION_COMPLETED_SUCCESSFULLY = "subscription completed successfully";
     private static final String SUBSCRIPTION_CANCELED_SUCCESSFULLY = "subscription canceled successfully";
     private static final String COMMAND_COULD_NOT_BE_IDENTIFIED = "The command could not be identified.";

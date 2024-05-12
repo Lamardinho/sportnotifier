@@ -18,4 +18,5 @@
 
     <include file="changesets/2024_05_11__02_subscription_to_notifications_create_and_inserts.sql"
              relativeToChangelogFile="true"/>
+    <include file="changesets/2024_05_12__01_telegram_subscriber_create.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>
