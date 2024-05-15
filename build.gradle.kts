@@ -8,6 +8,9 @@ var lombokVersion: String = "1.18.30"
 // https://mvnrepository.com/artifact/org.springframework/spring-web
 var springWebVersion: String = "6.1.6"
 
+// https://mvnrepository.com/artifact/org.springframework.retry/spring-retry
+var springRetryVersion: String = "2.0.5"
+
 // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui
 val openUiWebMvcVersion = "2.5.0"
 
@@ -61,6 +64,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-aop")
     // todo: Уже есть в какой то либе, но версия с уязвимостями. Указываем принудительно более новую:
     implementation("org.springframework:spring-web:$springWebVersion")
+    implementation("org.springframework.retry:spring-retry:$springRetryVersion")
 
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$openUiWebMvcVersion")
     // Уже есть в какой то либе, но версия с уязвимостями. Указываем принудительно более новую:
