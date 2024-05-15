@@ -1,0 +1,16 @@
+{
+  "name": "sportnotifier",
+  "short_name": "sportn",
+  "description": "sportnotifier application",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3f51b5",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "320x320",
+      "type": "image/png"
+    }
+  ]
+}
