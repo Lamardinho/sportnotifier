@@ -1,7 +1,7 @@
 package com.lamardinho.sportnotifier.messages.telegram.impl;
 
-import com.lamardinho.sportnotifier.messages.telegram.dto.TelegramSendMessageDTO;
 import com.lamardinho.sportnotifier.messages.telegram.TelegramMessageService;
+import com.lamardinho.sportnotifier.messages.telegram.dto.TelegramSendMessageDTO;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
