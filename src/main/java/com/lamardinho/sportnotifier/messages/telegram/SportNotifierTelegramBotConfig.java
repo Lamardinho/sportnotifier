@@ -12,7 +12,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 @Configuration
-@Profile({AppProfile.PROD, AppProfile.TELEGRAM_BOT})
+@Profile({AppProfile.TELEGRAM_BOT})
 public class SportNotifierTelegramBotConfig {
 
     @Value("${app.telegram.bot.sportnotifier.token}")
