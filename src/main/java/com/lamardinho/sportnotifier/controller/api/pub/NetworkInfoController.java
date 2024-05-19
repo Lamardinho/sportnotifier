@@ -1,4 +1,4 @@
-package com.lamardinho.sportnotifier.controller.api;
+package com.lamardinho.sportnotifier.controller.api.pub;
 
 import com.lamardinho.sportnotifier.service.NetworkInfoService;
 import lombok.NonNull;
@@ -11,13 +11,18 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/network-info")
+@RequestMapping("/api/public/network-info")
 @RequiredArgsConstructor
 @Log4j2
 public class NetworkInfoController {
 
     @NonNull
     private final NetworkInfoService service;
+
+    @GetMapping("/localhost")
+    public String getLocalHost() {
+        return service.getLocalHost();
+    }
 
     @GetMapping("/ip-addresses")
     public List<String> getIpAddresses() {

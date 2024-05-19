@@ -1,0 +1,38 @@
+{{/* https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-template-v1 */}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "sportnotifier.fullname" . }}
+  labels:
+    {{- include "sportnotifier.labels" . | nindent 4 }}
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "sportnotifier.fullname" . }}
+  template:
+    metadata:
+      name: {{ include "sportnotifier.fullname" . }}
+      labels:
+        app: {{ include "sportnotifier.fullname" . }}
+    spec:
+    {{/* https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1 */}}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ .Values.image.repository }}
+          resources:
+            limits:
+              cpu: "500m"
+              memory: 1024Mi
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "local,datasource_h2,ssl"
+      imagePullSecrets:
+        - name: slezkin23-registrykey
+      restartPolicy: Always
+      automountServiceAccountToken: false
