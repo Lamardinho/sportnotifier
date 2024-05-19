@@ -9,12 +9,12 @@ log() {
 }
 
 IMAGE_NAME="slezkin23/sportnotifier"
-VERSION="1.4.1"
+VERSION="1.4.2"
 SPRING_PROFILE="prod"
 
 log "BUILD PROJECT" && ./gradlew clean build
 
-log "MYBUILDER"
+log "BUILDX MY-BUILDER"
 docker buildx create --name mybuilder --use || echo "Docker Buildx уже создан"
 docker buildx inspect mybuilder --bootstrap
 
