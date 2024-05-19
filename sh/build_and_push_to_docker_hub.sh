@@ -9,7 +9,7 @@ log() {
 }
 
 IMAGE_NAME="slezkin23/sportnotifier"
-VERSION="1.4.2"
+VERSION="1.4.3"
 SPRING_PROFILE="prod"
 
 log "BUILD PROJECT" && ./gradlew clean build

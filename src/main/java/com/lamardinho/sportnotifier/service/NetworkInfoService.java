@@ -6,6 +6,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
+import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,5 +32,11 @@ public class NetworkInfoService {
         }
 
         return networkAddresses;
+    }
+
+    @SneakyThrows
+    public String getLocalHost() {
+        val inetAddress = InetAddress.getLocalHost();
+        return inetAddress.getHostAddress();
     }
 }
