@@ -4,6 +4,7 @@ import com.lamardinho.sportnotifier.messages.telegram.TelegramMessageService;
 import com.lamardinho.sportnotifier.messages.telegram.dto.TelegramSendMessageDTO;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +13,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.env.Environment;
 
+import java.lang.management.ManagementFactory;
+import java.net.InetAddress;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -35,6 +38,7 @@ public class AppStartedLogInfo {
         val profiles = environment.getActiveProfiles();
         val profileList = Arrays.stream(profiles).collect(Collectors.toSet());
         log.info("PROFILES: {}", profileList);
+        printSystemInfo();
 
         telegramMessageService.sendMessage(
                 new TelegramSendMessageDTO(ownerChatID, "sportnotifier started"),
@@ -50,5 +54,18 @@ public class AppStartedLogInfo {
                                                                                \s""";
 
         log.info(str);
+    }
+
+    @SneakyThrows
+    private void printSystemInfo() {
+        val osBean = ManagementFactory.getOperatingSystemMXBean();
+
+        log.info("OS name: {}", osBean.getName());
+        log.info("OS version: {}", osBean.getVersion());
+        log.info("Processor arch: {}", osBean.getArch());
+        log.info("Available Processors: {}", osBean.getAvailableProcessors());
+
+        val inetAddress = InetAddress.getLocalHost();
+        log.info(inetAddress);
     }
 }
