@@ -3,9 +3,9 @@ application:
 
 image:
   repository: slezkin23/sportnotifier
-  pullPolicy: Always
-  # Overrides the image tag whose default is the chart appVersion.
+  # image tag whose default is the chart appVersion.
   tag: ""
+  pullPolicy: Always
 
 replicaCount: 1
 
