@@ -1,0 +1,58 @@
+{{/* https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-template-v1 */}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "sportnotifier.fullname" . }}
+  labels:
+    {{- include "sportnotifier.labels" . | nindent 4 }}
+  namespace: default
+spec:
+  replicas: {{ .Values.app.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "sportnotifier.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.app.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "sportnotifier.selectorLabels" . | nindent 8 }}
+    spec:
+    {{/* https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1 */}}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.app.image.repository }}:{{ .Values.app.image.tag | default "latest" }}"
+          resources:
+            {{- toYaml .Values.app.resources | nindent 12 }}
+          imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+          ports:
+            - containerPort: 80
+              protocol: TCP
+{{/*          readinessProbe:*/}}
+{{/*            httpGet:*/}}
+{{/*              scheme: HTTP*/}}
+{{/*              path: /actuator/health/readiness*/}}
+{{/*              port: {{ .Values.service.targetPort }}*/}}
+{{/*            initialDelaySeconds: 30*/}}
+{{/*            timeoutSeconds: 5*/}}
+{{/*            periodSeconds: 60*/}}
+{{/*          livenessProbe:*/}}
+{{/*            httpGet:*/}}
+{{/*              scheme: HTTP*/}}
+{{/*              path: /actuator/health/liveness*/}}
+{{/*              port: {{ .Values.service.targetPort }}*/}}
+{{/*            initialDelaySeconds: 180*/}}
+{{/*            timeoutSeconds: 5*/}}
+{{/*            periodSeconds: 60*/}}
+{{/*            failureThreshold: 3*/}}
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: {{ .Values.app.spring.profiles }}
+      {{- with .Values.app.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      restartPolicy: Always
+      automountServiceAccountToken: false
