@@ -7,32 +7,52 @@ metadata:
     {{- include "sportnotifier.labels" . | nindent 4 }}
   namespace: default
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.app.replicaCount }}
   selector:
     matchLabels:
-      app: {{ include "sportnotifier.fullname" . }}
+      {{- include "sportnotifier.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      name: {{ include "sportnotifier.fullname" . }}
+      {{- with .Values.app.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       labels:
-        app: {{ include "sportnotifier.fullname" . }}
+        {{- include "sportnotifier.selectorLabels" . | nindent 8 }}
     spec:
     {{/* https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1 */}}
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}"
+          image: "{{ .Values.app.image.repository }}:{{ .Values.app.image.tag | default "latest" }}"
           resources:
-            limits:
-              cpu: "500m"
-              memory: 1024Mi
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+            {{- toYaml .Values.app.resources | nindent 12 }}
+          imagePullPolicy: {{ .Values.app.image.pullPolicy }}
           ports:
             - containerPort: 80
               protocol: TCP
+{{/*          readinessProbe:*/}}
+{{/*            httpGet:*/}}
+{{/*              scheme: HTTP*/}}
+{{/*              path: /actuator/health/readiness*/}}
+{{/*              port: {{ .Values.service.targetPort }}*/}}
+{{/*            initialDelaySeconds: 30*/}}
+{{/*            timeoutSeconds: 5*/}}
+{{/*            periodSeconds: 60*/}}
+{{/*          livenessProbe:*/}}
+{{/*            httpGet:*/}}
+{{/*              scheme: HTTP*/}}
+{{/*              path: /actuator/health/liveness*/}}
+{{/*              port: {{ .Values.service.targetPort }}*/}}
+{{/*            initialDelaySeconds: 180*/}}
+{{/*            timeoutSeconds: 5*/}}
+{{/*            periodSeconds: 60*/}}
+{{/*            failureThreshold: 3*/}}
           env:
             - name: SPRING_PROFILES_ACTIVE
-              value: "local,datasource_h2,ssl"
+              value: {{ .Values.app.spring.profiles }}
+      {{- with .Values.app.imagePullSecrets }}
       imagePullSecrets:
-        - name: slezkin23-registrykey
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       restartPolicy: Always
       automountServiceAccountToken: false

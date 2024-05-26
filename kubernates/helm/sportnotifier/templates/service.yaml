@@ -8,8 +8,8 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   selector:
-    app: {{ include "sportnotifier.fullname" . }}
+    {{- include "sportnotifier.selectorLabels" . | nindent 4 }}
   ports:
-    - protocol: TCP
-      port: 8190
-      targetPort: 8090
+    - protocol: {{ .Values.service.protocol }}
+      port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}
