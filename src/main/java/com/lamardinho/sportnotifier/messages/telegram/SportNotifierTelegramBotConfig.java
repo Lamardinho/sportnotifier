@@ -20,13 +20,15 @@ public class SportNotifierTelegramBotConfig {
 
     @Bean
     TelegramBotsApi telegramBotsApi(
-            @NonNull TelegramSubscriberService telegramSubscriberService
+            @NonNull TelegramSubscriberService telegramSubscriberService,
+            @NonNull TelegramMessageService telegramMessageService
     ) throws TelegramApiException {
         val botsApi = new TelegramBotsApi(DefaultBotSession.class);
         botsApi.registerBot(
                 new SportNotifierTelegramBot(
                         myBotToken,
-                        telegramSubscriberService
+                        telegramSubscriberService,
+                        telegramMessageService
                 )
         );
 

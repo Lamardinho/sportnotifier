@@ -1,12 +1,12 @@
 package com.lamardinho.sportnotifier.messages.telegram;
 
 import com.lamardinho.sportnotifier.common.AppException;
+import com.lamardinho.sportnotifier.messages.telegram.dto.TelegramSendMessageDTO;
 import com.lamardinho.sportnotifier.messages.telegram.dto.TelegramSubscriberCreateDto;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import lombok.val;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import static java.lang.String.format;
@@ -16,16 +16,23 @@ public class SportNotifierTelegramBot extends TelegramLongPollingBot {
 
     @NonNull
     private final TelegramSubscriberService telegramSubscriberService;
+    @NonNull
+    private final TelegramMessageService telegramMessageService;
+
+    private final String thisBotToken;
 
     /**
      * @param botToken - bot token for registration.
      */
     public SportNotifierTelegramBot(
             @NonNull String botToken,
-            @NonNull TelegramSubscriberService telegramSubscriberService
+            @NonNull TelegramSubscriberService telegramSubscriberService,
+            @NonNull TelegramMessageService telegramMessageService
     ) {
         super(botToken);
         this.telegramSubscriberService = telegramSubscriberService;
+        this.telegramMessageService = telegramMessageService;
+        this.thisBotToken = botToken;
     }
 
     @Override
@@ -86,11 +93,13 @@ public class SportNotifierTelegramBot extends TelegramLongPollingBot {
     }
 
     private void sendMessage(long chatId, @NonNull String text) {
-        val sendMessage = new SendMessage();
-        sendMessage.setChatId(chatId);
-        sendMessage.setText(text);
         try {
-            execute(sendMessage);
+            // old impl: val sendMessage = new SendMessage(); sendMessage.setChatId(chatId); sendMessage.setText(text); execute(sendMessage);  //NOSONAR
+            log.info("Отправляю сообщение для chatId: {}", chatId);
+            telegramMessageService.sendMessage(
+                    new TelegramSendMessageDTO(String.valueOf(chatId), text),
+                    thisBotToken
+            );
         } catch (Exception e) {
             throw new AppException(e.getMessage(), e);
         }
