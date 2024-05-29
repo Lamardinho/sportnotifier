@@ -30,23 +30,6 @@ spec:
           ports:
             - containerPort: 80
               protocol: TCP
-{{/*          readinessProbe:*/}}
-{{/*            httpGet:*/}}
-{{/*              scheme: HTTP*/}}
-{{/*              path: /actuator/health/readiness*/}}
-{{/*              port: {{ .Values.service.targetPort }}*/}}
-{{/*            initialDelaySeconds: 30*/}}
-{{/*            timeoutSeconds: 5*/}}
-{{/*            periodSeconds: 60*/}}
-{{/*          livenessProbe:*/}}
-{{/*            httpGet:*/}}
-{{/*              scheme: HTTP*/}}
-{{/*              path: /actuator/health/liveness*/}}
-{{/*              port: {{ .Values.service.targetPort }}*/}}
-{{/*            initialDelaySeconds: 180*/}}
-{{/*            timeoutSeconds: 5*/}}
-{{/*            periodSeconds: 60*/}}
-{{/*            failureThreshold: 3*/}}
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: {{ .Values.app.spring.profiles }}
