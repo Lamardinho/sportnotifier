@@ -93,7 +93,6 @@ public class SportNotifierTelegramBot extends TelegramLongPollingBot {
     }
 
     private void sendMessage(long chatId, @NonNull String text) {
-        log.info("Отправляю сообщение для chatId: {}", chatId);
         try {
             // old impl: val sendMessage = new SendMessage(); sendMessage.setChatId(chatId); sendMessage.setText(text); execute(sendMessage);  //NOSONAR
             log.info("Отправляю сообщение для chatId: {}", chatId);
