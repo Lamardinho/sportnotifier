@@ -54,7 +54,7 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    document.getElementById('decodedTokenResult').innerHTML = JSON.stringify(data);
+                    document.getElementById('decodedTokenResult').innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
                 })
                 .catch(error => console.error('Error:', error));
         });
