@@ -18,7 +18,7 @@
 <!-- content -->
 <div class="container mt-4">
     <h1>Decode Token</h1>
-    <form id="decodeTokenForm" th:action="@{/api/decode-token}" method="get">
+    <form id="decodeTokenForm" th:action="@{/api/decode-token}" method="post">
         <div class="form-group">
             <label for="tokenInput">Token:</label>
             <input type="text" class="form-control" id="tokenInput" name="token">
@@ -45,7 +45,13 @@
         document.getElementById('decodeTokenForm').addEventListener('submit', function (event) {
             event.preventDefault();
             const token = document.getElementById('tokenInput').value;
-            fetch(this.getAttribute('action') + '?token=' + token)
+            fetch(this.getAttribute('action'), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({token: token})
+            })
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('decodedTokenResult').innerHTML = JSON.stringify(data);
@@ -54,7 +60,6 @@
         });
     });
 </script>
-
 
 </body>
 </html>

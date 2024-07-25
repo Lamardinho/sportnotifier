@@ -1,13 +1,15 @@
 package com.lamardinho.sportnotifier.controller.api;
 
 import com.lamardinho.sportnotifier.common.aop.TrackExecutionTime;
+import com.lamardinho.sportnotifier.dto.TokenRequest;
 import com.lamardinho.sportnotifier.service.DecodeTokenService;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
@@ -21,9 +23,9 @@ public class DecodeTokenController {
     private final DecodeTokenService service;
 
     @Operation(summary = "распасрить токен")
-    @GetMapping
+    @PostMapping
     @TrackExecutionTime
-    public Map<String, Object> decodeToken(@RequestParam("token") String token) {
-        return service.decodeToken(token);
+    public Map<String, Object> decodeToken(@RequestBody @NonNull @Valid TokenRequest token) {
+        return service.decodeToken(token.getToken());
     }
 }
