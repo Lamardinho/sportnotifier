@@ -31,9 +31,9 @@ public class MainController {
         return "change-password";
     }
 
-    @GetMapping("/decode-token")
-    public String decodeToken() {
-        return "decode-token";
+    @GetMapping("/public/parse-token")
+    public String parseToken() {
+        return "parse-token";
     }
 
     @ModelAttribute

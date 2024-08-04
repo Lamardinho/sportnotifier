@@ -1,0 +1,26 @@
+version: '3.9'
+
+name: sportnotifier_pg_db
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: sportnotifier
+    restart: always
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    networks:
+      - sportnotifier_network
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-sportnotifier}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres_password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+networks:
+  sportnotifier_network:
+    external: true
+
+volumes:
+  postgres_data:

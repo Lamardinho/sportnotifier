@@ -1,0 +1,57 @@
+version: '3.8'
+
+name: sportnotifier-c
+
+services:
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: sportnotifier_postgresql
+    restart: always
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    networks:
+      - sportnotifier_network
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-sportnotifier}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres_password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  sportnotifier:
+    container_name: sportnotifier
+    image: slezkin23/sportnotifier
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-default}
+      DB_USER: ${POSTGRES_USER:-postgres_user}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-postgres_password}
+      DATABASE_HOST: sportnotifier_postgresql
+      DATABASE_PORT: 5432
+      DATABASE_NAME: ${POSTGRES_DB:-sportnotifier}
+    ports:
+      - "${SPORTNOTIFIER_PORT:-8090}:8090"
+    networks:
+      - sportnotifier_network
+    restart: always
+    command: [ "sh", "-c", "docker container prune -f && docker image prune -f" ]
+
+#  keycloak:
+#    container_name: sportnotifier_keycloak
+#    image: quay.io/keycloak/keycloak:24.0.4
+#    environment:
+#      KEYCLOAK_ADMIN: admin
+#      KEYCLOAK_ADMIN_PASSWORD: admin
+#    ports:
+#      - "8092:8080"
+#    networks:
+#      - sportnotifier_network
+#    restart: always
+#    command: start-dev
+
+networks:
+  sportnotifier_network:
+    external: true
+
+volumes:
+  postgres_data:

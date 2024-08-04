@@ -94,6 +94,10 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
+tasks.withType<JavaExec> {
+    jvmArgs = listOf("-XX:+UseG1GC")
+}
+
 tasks.named<BootJar>("bootJar") {
     archiveFileName = "sportnotifier.jar"
 }
