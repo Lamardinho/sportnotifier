@@ -14,24 +14,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class DecodeTokenService {
+public class ParseTokenService {
 
     private final Base64.Decoder decoder = Base64.getDecoder();
     private final JsonParser jsonParser = JsonParserFactory.getJsonParser();
 
     @NonNull
     @SneakyThrows
-    public Map<String, Object> decodeToken(@Valid @NotBlank @NonNull String token) {
+    public Map<String, Object> parseToken(@Valid @NotBlank @NonNull String token) {
         val parts = token.split("\\.");
 
         switch (parts.length) {
             case 1 -> {
-                return decodePart(token);
+                return decodeAndParsePart(token);
             }
             case 3 -> {
                 val decodedToken = new HashMap<String, Object>();
-                decodedToken.put("header", decodePart(parts[0]));
-                decodedToken.put("payload", decodePart(parts[1]));
+                decodedToken.put("header", decodeAndParsePart(parts[0]));
+                decodedToken.put("payload", decodeAndParsePart(parts[1]));
                 decodedToken.put("signature", parts[2]);
                 return decodedToken;
             }
@@ -40,7 +40,7 @@ public class DecodeTokenService {
     }
 
     @NonNull
-    private Map<String, Object> decodePart(@NonNull String part) {
+    private Map<String, Object> decodeAndParsePart(@NonNull String part) {
         try {
             val bytes = decoder.decode(part);
             val decodedPart = new String(bytes);
