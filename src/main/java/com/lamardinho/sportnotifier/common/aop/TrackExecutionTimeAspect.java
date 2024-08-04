@@ -32,7 +32,7 @@ public class TrackExecutionTimeAspect {
     private String getUserName() {
         val securityContext = SecurityContextHolder.getContext();
         if (securityContext == null || securityContext.getAuthentication() == null) {
-            return "application";
+            return "anonymous";
         }
         return securityContext.getAuthentication().getName();
     }
