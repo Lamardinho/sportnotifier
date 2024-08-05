@@ -1,7 +1,7 @@
 #!/bin/bash
 # shellcheck disable=SC2164
 # Упаковка проекта и отправка в docker hub.
-cd ~/IdeaProjects/sportnotifier
+cd ~/IdeaProjects/_pet/sportnotifier
 
 log() {
     local edited_string="***************** $1 *****************"
@@ -9,7 +9,7 @@ log() {
 }
 
 IMAGE_NAME="slezkin23/sportnotifier"
-VERSION="1.6.1"
+VERSION="1.7.2"
 SPRING_PROFILE="prod"
 
 log "BUILD PROJECT" && ./gradlew clean build
