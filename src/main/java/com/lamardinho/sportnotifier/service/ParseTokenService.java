@@ -1,5 +1,6 @@
 package com.lamardinho.sportnotifier.service;
 
+import com.lamardinho.sportnotifier.common.ParseTokenException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.NonNull;
@@ -46,7 +47,9 @@ public class ParseTokenService {
             val decodedPart = new String(bytes);
             return jsonParser.parseMap(decodedPart);
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid token part", e);
+            val msgPrefix = "Invalid token part";
+            val msg = (e.getMessage() == null) ? msgPrefix : msgPrefix + ": " + e.getMessage();
+            throw new ParseTokenException(msg, e);
         }
     }
 }
