@@ -1,7 +1,7 @@
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-gradle-plugin
-var springBootVersion: String = "3.2.4"
+var springBootVersion: String = "3.3.1"
 
 var lombokVersion: String = "1.18.30"
 
@@ -33,15 +33,16 @@ val telegramBotVersion = "6.9.7.1"
 
 plugins {
     java
-    id("org.springframework.boot") version "3.2.4"
-    id("io.spring.dependency-management") version "1.1.4"
+    id("org.springframework.boot") version "3.3.1"
+    id("io.spring.dependency-management") version "1.1.6"
 }
 
 group = "com.lamardinho"
 version = "0.0.1-SNAPSHOT"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
 configurations {
@@ -104,4 +105,8 @@ tasks.named<BootJar>("bootJar") {
 
 tasks.test {
     systemProperty("spring.profiles.active", "test")
+}
+
+tasks.withType<JavaCompile> {
+    options.release.set(21)
 }
