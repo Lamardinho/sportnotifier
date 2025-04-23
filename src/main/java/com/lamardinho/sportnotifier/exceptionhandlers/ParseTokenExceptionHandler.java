@@ -1,4 +1,4 @@
-package com.lamardinho.sportnotifier.exceptionhandlers.t;
+package com.lamardinho.sportnotifier.exceptionhandlers;
 
 import com.lamardinho.sportnotifier.common.ParseTokenException;
 import lombok.NonNull;
